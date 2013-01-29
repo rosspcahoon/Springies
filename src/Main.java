@@ -17,7 +17,7 @@ public class Main {
 
     private Main () {
     	//hi
-    	//bye
+    	//hi2
         // does not make sense to construct this class
     }
 
