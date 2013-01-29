@@ -17,8 +17,6 @@ public class FixedMass extends Mass {
 	}
     @Override
     public void update (double elapsedTime, Dimension bounds) {
-    	setVelocity(0,0);
-        super.update(elapsedTime, bounds);
     }
 
 }
