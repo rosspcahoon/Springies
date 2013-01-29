@@ -53,7 +53,11 @@ public class Factory {
         double x = line.nextDouble();
         double y = line.nextDouble();
         double mass = line.nextDouble();
+//        if(mass < 0){
+//        	FixedMass result new FixedMass(x,y);
+//        }
         Mass result = new Mass(x, y, mass);
+        
         myMasses.put(id,  result);
         return result;
     }
