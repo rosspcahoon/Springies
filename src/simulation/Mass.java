@@ -68,6 +68,10 @@ public class Mass extends Sprite {
         // this is a little awkward, so hide it
         return new Location(getX(), getY()).distance(new Location(other.getX(), other.getY()));
     }
+    
+    public double getMass(){
+    	return myMass;
+    }
 
 
     // check for move out of bounds
