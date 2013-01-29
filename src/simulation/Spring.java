@@ -22,7 +22,7 @@ public class Spring extends Sprite {
     private Mass myStart;
     private Mass myEnd;
     private double myLength;
-    private double myK;
+	private double myK;
 
     /**
      * XXX.
@@ -81,4 +81,12 @@ public class Spring extends Sprite {
     private static Dimension getSize (Mass start, Mass end) {
         return new Dimension((int)start.distance(end), IMAGE_HEIGHT);
     }
+    
+    protected double getMyLength() {
+		return myLength;
+	}
+
+	protected void setMyLength(double myLength) {
+		this.myLength = myLength;
+	}
 }
