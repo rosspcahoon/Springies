@@ -1,15 +1,24 @@
 package simulation;
 
 import java.awt.Color;
+import java.awt.Dimension;
+
+/**
+ * XXX.
+ * 
+ * @author Ross Cahoon
+ */
 
 public class FixedMass extends Mass {
-	
-// First iteration, I will use the mass as something really large.
-	private double myLargeMass = ; 
+	private static int DEFAULT_MASS = 0;
 	
 	public FixedMass(double x, double y) {
-		super(x, y, myLargestMass);
-		// TODO Auto-generated constructor stub
+        super(x,y,DEFAULT_MASS);
 	}
+    @Override
+    public void update (double elapsedTime, Dimension bounds) {
+    	setVelocity(0,0);
+        super.update(elapsedTime, bounds);
+    }
 
 }
