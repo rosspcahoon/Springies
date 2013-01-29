@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.ArrayList;
+import util.Vector;
+
 import view.Canvas;
 
 
@@ -18,6 +20,11 @@ public class Model {
     // simulation state
     private List<Mass> myMasses;
     private List<Spring> mySprings;
+    private Vector myGravity;
+// 	  Unimplemented
+//    private Vector myViscosity;
+//    private Vector myCenterMass;
+//    private Vector myWallRepulsion;
 
     /**
      * Create a game of the given size with the given display for its shapes.
@@ -26,6 +33,8 @@ public class Model {
         myView = canvas;
         myMasses = new ArrayList<Mass>();
         mySprings = new ArrayList<Spring>();
+        myGravity = null;
+        
     }
 
     /**
@@ -49,6 +58,10 @@ public class Model {
             s.update(elapsedTime, bounds);
         }
         for (Mass m : myMasses) {
+        	if(myGravity != null){
+        		myGravity.scale(m.getMass());
+        		m.applyForce(myGravity);
+        	}        		
             m.update(elapsedTime, bounds);
         }
     }
@@ -66,4 +79,25 @@ public class Model {
     public void add (Spring spring) {
         mySprings.add(spring);
     }
+    
+    /**
+     * Set gravity given the read force.
+     */
+    public void setGravity (Vector gravity) {
+        myGravity = gravity;
+    }
+    
+    /**
+     * Set viscosity given read force.
+     */
+//    public void setViscosity (Vector viscosity) {
+//        myViscosity = viscosity;
+//    }
+    
+    /**
+     * Set center of mass given read force.
+     */
+//    public void setCenterMass (Vector centermass) {
+//        myCenterMass = centermass;
+//    }
 }
