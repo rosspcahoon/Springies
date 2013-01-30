@@ -18,9 +18,9 @@ public class Factory {
 	private static final String MASS_KEYWORD = "mass";
 	private static final String SPRING_KEYWORD = "spring";
 	private static final String GRAVITY_KEYWORD = "gravity";
-//	private static final String VISCOSITY_KEYWORD = "viscosity";
-//	private static final String CENTERMASS_KEYWORD = "centermass";
-//	private static final String WALL_REPULSION_KEYWORD = "wall";
+	//	private static final String VISCOSITY_KEYWORD = "viscosity";
+	private static final String CENTERMASS_KEYWORD = "centermass";
+	//	private static final String WALL_REPULSION_KEYWORD = "wall";
 
 	// mass IDs
 	Map<Integer, Mass> myMasses = new HashMap<Integer, Mass>();
@@ -62,15 +62,15 @@ public class Factory {
 					if (GRAVITY_KEYWORD.equals(type)) {
 						model.setGravity(gravityCommand(line));
 					}
-//					else if (VISCOSITY_KEYWORD.equals(type)) {
-//						model.setViscosity(springCommand(line));
-//					}
-//					else if (CENTERMASS_KEYWORD.equals(type)) {
-//						model.setCenterMass(springCommand(line));
-//					}
-//					else if (WALL_REPULSION_KEYWORD.equals(type)) {
-//						model.set(springCommand(line));
-//					}                    
+					//					else if (VISCOSITY_KEYWORD.equals(type)) {
+					//						model.setViscosity(springCommand(line));
+					//					}
+					else if (CENTERMASS_KEYWORD.equals(type)) {
+						model.setCenterMass(centerMassCommand(line));
+					}
+					//					else if (WALL_REPULSION_KEYWORD.equals(type)) {
+					//						model.set(springCommand(line));
+					//					}                    
 				}
 			}
 			input.close();
@@ -108,5 +108,14 @@ public class Factory {
 		double angle = line.nextDouble();
 		double magnitude = line.nextDouble();
 		return new Vector(angle, magnitude);
+	}
+
+	private double[] centerMassCommand(Scanner line){
+		double magnitude = line.nextDouble();
+		double exponent = line.nextDouble();
+		double[] result = new double[2];
+		result[0] = magnitude;
+		result[1] = exponent;	
+		return result;
 	}
 }
