@@ -73,7 +73,6 @@ public class Mass extends Sprite {
     	return myMass;
     }
 
-
     // check for move out of bounds
     private Vector getBounce (Dimension bounds) {
         final double IMPULSE_MAGNITUDE = 2;

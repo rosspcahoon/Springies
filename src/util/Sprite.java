@@ -103,6 +103,10 @@ public abstract class Sprite {
     public double getY () {
         return myCenter.getY();
     }
+    
+    public Location getCenter(){
+    	return myCenter;
+    }
 
     /**
      * Returns shape's left-most coordinate in pixels.

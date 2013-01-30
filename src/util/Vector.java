@@ -90,7 +90,7 @@ public class Vector {
     /**
      * Sets this vector's magnitude to the given value.
      */
-    protected void setMagnitude (double value) {
+    public void setMagnitude (double value) {
         myMagnitude = value;
     }
 
@@ -236,7 +236,7 @@ public class Vector {
      */
     public static double angleBetween (double dx, double dy) {
         // TODO: this is still buggy :(
-        return Math.toDegrees(Math.atan2(dy, dx));
+        return 360 - Math.toDegrees(Math.atan2(dy, dx));
     }
 
     /**

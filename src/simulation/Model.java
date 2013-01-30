@@ -1,9 +1,12 @@
 package simulation;
 
+
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.util.List;
 import java.util.ArrayList;
+
+import util.Location;
 import util.Vector;
 
 import view.Canvas;
@@ -15,89 +18,138 @@ import view.Canvas;
  * @author Robert C. Duvall
  */
 public class Model {
-    // bounds and input for game
-    private Canvas myView;
-    // simulation state
-    private List<Mass> myMasses;
-    private List<Spring> mySprings;
-    private Vector myGravity;
-// 	  Unimplemented
-//    private Vector myViscosity;
-//    private Vector myCenterMass;
-//    private Vector myWallRepulsion;
+	// bounds and input for game
+	private Canvas myView;
+	// simulation state
+	private List<Mass> myMasses;
+	private List<Spring> mySprings;
+	private Vector myGravity;
+	private boolean myCenterMass;
+	private double myCenterMassMagnitude;
+	private double myCenterMassExponent;
+	private Location myCenterMassLocation = new Location();
+	private double myTotalMass;
+	// 	  Unimplemented
+	//    private Vector myViscosity;
+	//    private Vector myWallRepulsion;
 
-    /**
-     * Create a game of the given size with the given display for its shapes.
-     */
-    public Model (Canvas canvas) {
-        myView = canvas;
-        myMasses = new ArrayList<Mass>();
-        mySprings = new ArrayList<Spring>();
-        myGravity = null;
-        
-    }
+	/**
+	 * Create a game of the given size with the given display for its shapes.
+	 */
+	public Model (Canvas canvas) {
+		myView = canvas;
+		myMasses = new ArrayList<Mass>();
+		mySprings = new ArrayList<Spring>();
+		myGravity = null;
+		myCenterMass = false;
+	}
 
-    /**
-     * Draw all elements of the simulation.
-     */
-    public void paint (Graphics2D pen) {
-        for (Spring s : mySprings) {
-            s.paint(pen);
-        }
-        for (Mass m : myMasses) {
-            m.paint(pen);
-        }
-    }
+	/**
+	 * Draw all elements of the simulation.
+	 */
+	public void paint (Graphics2D pen) {
+		for (Spring s : mySprings) {
+			s.paint(pen);
+		}
+		for (Mass m : myMasses) {
+			m.paint(pen);
+		}
+	}
 
-    /**
-     * Update simulation for this moment, given the time since the last moment.
-     */
-    public void update (double elapsedTime) {
-        Dimension bounds = myView.getSize();
-        for (Spring s : mySprings) {
-            s.update(elapsedTime, bounds);
-        }
-        for (Mass m : myMasses) {
-        	if(myGravity != null){
-        		myGravity.scale(m.getMass());
-        		m.applyForce(myGravity);
-        	}        		
-            m.update(elapsedTime, bounds);
-        }
-    }
+	/**
+	 * Update simulation for this moment, given the time since the last moment.
+	 */
+	public void update (double elapsedTime) {
+		updateCenterMass();
+		Dimension bounds = myView.getSize();
+		for (Spring s : mySprings) {
+			s.update(elapsedTime, bounds);
+		}
+		for (Mass m : myMasses) {
+			updateGravity(m);
+			updateCenterMassForce(m);
+			m.update(elapsedTime, bounds);
+		}
+	}
+	/**
+	 * Update force of center of mass on a given mass
+	 */
 
-    /**
-     * Add given mass to this simulation.
-     */
-    public void add (Mass mass) {
-        myMasses.add(mass);
-    }
+	public void updateCenterMassForce(Mass m){
+		if(myCenterMass){
 
-    /**
-     * Add given spring to this simulation.
-     */
-    public void add (Spring spring) {
-        mySprings.add(spring);
-    }
-    
-    /**
-     * Set gravity given the read force.
-     */
-    public void setGravity (Vector gravity) {
-        myGravity = gravity;
-    }
-    
-    /**
-     * Set viscosity given read force.
-     */
-//    public void setViscosity (Vector viscosity) {
-//        myViscosity = viscosity;
-//    }
-    
-    /**
-     * Set center of mass given read force.
-     */
-//    public void setCenterMass (Vector centermass) {
-//        myCenterMass = centermass;
-//    }
+			util.Vector tempVector = new util.Vector(m.getCenter(), myCenterMassLocation);
+			double tempDistance = m.getCenter().distance(myCenterMassLocation);
+			tempVector.setMagnitude(myCenterMassMagnitude);
+			m.applyForce(tempVector);
+		}     
+	}
+	/**
+	 * Update force of gravity on a given mass
+	 */
+
+	public void updateGravity(Mass m){
+		if(myGravity != null){
+			myGravity.scale(m.getMass());
+			m.applyForce(myGravity);
+		}     
+	}
+	/**
+	 * Update total mass in system
+	 */
+
+	public void updateCenterMass(){
+		if(myCenterMass){
+			myTotalMass = 0;
+			double tempX = 0;
+			double tempY = 0;
+			for(Mass m : myMasses){
+				myTotalMass += m.getMass();
+				tempX += m.getX()*m.getMass();
+				tempY += m.getY()*m.getMass();
+				System.out.println(m.getX() + ", " + m.getY());
+			}
+			System.out.println("CALC " + tempX/myTotalMass + ", " + tempY/myTotalMass);
+			myCenterMassLocation.setLocation(tempX/myTotalMass, tempY/myTotalMass);
+		}
+	}
+	/**
+	 * Add given mass to this simulation.
+	 */
+	public void add (Mass mass) {
+		myMasses.add(mass);
+	}
+
+	/**
+	 * Add given spring to this simulation.
+	 */
+	public void add (Spring spring) {
+		mySprings.add(spring);
+	}
+
+	/**
+	 * Set gravity given the read force.
+	 */
+	public void setGravity (Vector gravity) {
+		myGravity = gravity;
+	}
+
+	/**
+	 * Set viscosity given read force.
+	 */
+	//    public void setViscosity (Vector viscosity) {
+	//        myViscosity = viscosity;
+	//    }
+
+	/**
+	 * Set center of mass given read force.
+	 */
+	public void setCenterMass (double[] centermass) {
+		myCenterMassMagnitude = centermass[0];
+		myCenterMassExponent = centermass[1];
+		myCenterMass = true;
+		System.out.println("Centermass Set");
+	}
+
+
 }
