@@ -36,8 +36,7 @@ public class Model {
 	private double myCenterMassExponent;
 	private Location myCenterMassLocation = new Location();
 	private double myTotalMass;
-	// 	  Unimplemented
-	//    private Vector myWallRepulsion;
+
 
 	/**
 	 * Create a game of the given size with the given display for its shapes.
@@ -74,6 +73,8 @@ public class Model {
 		for (Mass m : myMasses) {
 			updateGravity(m);
 			updateCenterMassForce(m);
+			updateViscosity(m);
+			updateWallRepulsion(m);
 			m.update(elapsedTime, bounds);
 		}
 	}
@@ -87,8 +88,8 @@ public class Model {
 			// don't believe he added a clone function for Vector.
 			//
 			util.Vector tempVector = new util.Vector(m.getCenter(), myCenterMassLocation);
-			double tempDistance = m.getCenter().distance(myCenterMassLocation);
-			tempVector.setMagnitude(myCenterMassMagnitude);
+			double tempDistance = Math.abs(m.getCenter().distance(myCenterMassLocation));
+			tempVector.setMagnitude(myCenterMassMagnitude/Math.pow(tempDistance,myCenterMassExponent));
 			m.applyForce(tempVector);
 		}
 	}
@@ -112,6 +113,7 @@ public class Model {
 		if(myViscosity != 0){
 			Vector viscosityForce=new Vector(m.getVelocity());
 			viscosityForce.scale(myViscosity);
+			viscosityForce.negate();
 			m.applyForce(viscosityForce);
 		}
 	}
@@ -126,12 +128,10 @@ public class Model {
 			double tempX = 0;
 			double tempY = 0;
 			for(Mass m : myMasses){
-				myTotalMass += m.getMass();
-				tempX += m.getX()*m.getMass();
-				tempY += m.getY()*m.getMass();
-				System.out.println(m.getX() + ", " + m.getY());
+				myTotalMass += Math.abs(m.getMass());
+				tempX += m.getX()*Math.abs(m.getMass());
+				tempY += m.getY()*Math.abs(m.getMass());
 			}
-			System.out.println("CALC " + tempX/myTotalMass + ", " + tempY/myTotalMass);
 			myCenterMassLocation.setLocation(tempX/myTotalMass, tempY/myTotalMass);
 		}
 	}

@@ -10,10 +10,9 @@ import java.awt.Dimension;
  */
 
 public class FixedMass extends Mass {
-	private static int DEFAULT_MASS = 0;
 
-	public FixedMass(double x, double y) {
-		super(x,y,DEFAULT_MASS);
+	public FixedMass(double x, double y, double mass) {
+		super(x,y,mass);
 	}
 	@Override
 	public void update (double elapsedTime, Dimension bounds) {

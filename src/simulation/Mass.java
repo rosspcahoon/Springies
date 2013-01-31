@@ -77,16 +77,16 @@ public class Mass extends Sprite {
     private Vector getBounce (Dimension bounds) {
         final double IMPULSE_MAGNITUDE = 2;
         Vector impulse = new Vector();
-        if (getLeft() < 0) {
+        if (getLeft()-1 < 0) {
             impulse = new Vector(RIGHT_DIRECTION, IMPULSE_MAGNITUDE);
         }
-        else if (getRight() > bounds.width) {
+        else if (getRight()+1 > bounds.width) {
             impulse = new Vector(LEFT_DIRECTION, IMPULSE_MAGNITUDE);
         }
-        if (getTop() < 0) {
+        if (getTop()-1 < 0) {
             impulse = new Vector(DOWN_DIRECTION, IMPULSE_MAGNITUDE);
         }
-        else if (getBottom() > bounds.height) {
+        else if (getBottom()+1 > bounds.height) {
             impulse = new Vector(UP_DIRECTION, IMPULSE_MAGNITUDE);
         }
         impulse.scale(getVelocity().getRelativeMagnitude(impulse));

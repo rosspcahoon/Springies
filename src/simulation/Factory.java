@@ -89,7 +89,7 @@ public class Factory {
 		double mass = line.nextDouble();
 		Mass result = new Mass(x,y,mass);
 		if(mass < 0){
-			result = new FixedMass(x,y);
+			result = new FixedMass(x, y, mass);
 		}
 		myMasses.put(id,  result);
 		return result;
