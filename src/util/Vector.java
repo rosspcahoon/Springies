@@ -37,10 +37,7 @@ public class Vector {
      * direction and distance between the two given points.
      */
     public Vector (Point2D source, Point2D target) {
-        double dx = target.getX() - source.getX();
-        double dy = source.getY() - target.getY();
-        setDirection(angleBetween(dx, dy));
-        setMagnitude(distanceBetween(dx, dy));
+        this(angleBetween(target, source), distanceBetween(target, source));
     }
 
     /**
