@@ -1,5 +1,5 @@
 package simulation;
 
 public abstract class AbstractForce {
-	public abstract void ApplyForce(Mass m);
+	public abstract void applyForce(Mass m);
 }

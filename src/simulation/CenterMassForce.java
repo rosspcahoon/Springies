@@ -16,7 +16,7 @@ public class CenterMassForce extends AbstractForce {
 	}
 	
 	@Override
-	public void ApplyForce(Mass m) {
+	public void applyForce(Mass m) {
 		util.Vector tempVector = new util.Vector(m.getCenter(), centerMassLocation);
 		double tempDistance = Math.abs(m.getCenter().distance(centerMassLocation));
 		tempVector.setMagnitude(myMagnitude/Math.pow(tempDistance,myExponent));

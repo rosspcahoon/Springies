@@ -17,11 +17,6 @@ public class Main {
 
     private Main () {
 
-<<<<<<< HEAD
-    	//hi
-    	//hi2
-=======
->>>>>>> 85fcac5728022765542b4e86ba9cb2ca29e9a06b
         // does not make sense to construct this class
     }
 
