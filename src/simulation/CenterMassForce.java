@@ -4,7 +4,7 @@ import java.util.List;
 
 import util.Location;
 
-public class CenterMassForce extends AbstractForce {
+public class CenterMassForce extends Force {
 	private double myMagnitude;
 	private double myExponent;
 	private static Location centerMassLocation=new Location();
@@ -16,7 +16,7 @@ public class CenterMassForce extends AbstractForce {
 	}
 	
 	@Override
-	public void ApplyForce(Mass m) {
+	public void applyForce(Mass m) {
 		util.Vector tempVector = new util.Vector(m.getCenter(), centerMassLocation);
 		double tempDistance = Math.abs(m.getCenter().distance(centerMassLocation));
 		tempVector.setMagnitude(myMagnitude/Math.pow(tempDistance,myExponent));

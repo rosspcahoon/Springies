@@ -2,16 +2,16 @@ package simulation;
 
 import util.Vector;
 
-public class Viscosity extends AbstractForce {
+public class ViscosityForce extends Force {
 	double myViscosity;
 	
-	public Viscosity(double viscosity)
+	public ViscosityForce(double viscosity)
 	{
 		myViscosity=viscosity;
 	}
 	
 	@Override
-	public void ApplyForce(Mass m) {
+	public void applyForce(Mass m) {
 		Vector viscosityForce=new Vector(m.getVelocity());
 		viscosityForce.scale(myViscosity);
 		viscosityForce.negate();

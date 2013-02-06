@@ -2,18 +2,18 @@ package simulation;
 
 import util.Vector;
 
-public class WallRepulsion extends AbstractForce {
+public class WallRepulsionForce extends Force {
 	Vector myRepulsion;
 	double myExponent;
 
-	public WallRepulsion(int wallID, double magnitude, double exponent)
+	public WallRepulsionForce(int wallID, double magnitude, double exponent)
 	{
 		double angle=((wallID+1)*90)%360;
 		myRepulsion=new Vector(angle,magnitude);
 		myExponent=exponent;
 	}
 	@Override
-	public void ApplyForce(Mass m) {
+	public void applyForce(Mass m) {
 		Vector scaledForce=new Vector(myRepulsion);
 		double distance=0;
 		switch((int)scaledForce.getDirection()%360)

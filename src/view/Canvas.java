@@ -188,11 +188,11 @@ public class Canvas extends JComponent {
         Factory factory = new Factory();
         int response = INPUT_CHOOSER.showOpenDialog(null);
         if (response == JFileChooser.APPROVE_OPTION) {
-            factory.loadModel(mySimulation, INPUT_CHOOSER.getSelectedFile());
+            factory.loadModel(mySimulation, INPUT_CHOOSER.getSelectedFile());            
         }
         response = INPUT_CHOOSER.showOpenDialog(null);
         if (response == JFileChooser.APPROVE_OPTION) {
-            factory.loadForces(mySimulation, INPUT_CHOOSER.getSelectedFile());
+            factory.loadForces(mySimulation, INPUT_CHOOSER.getSelectedFile());            
         }
     }
 }

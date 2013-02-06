@@ -60,16 +60,16 @@ public class Factory {
 				if (line.hasNext()) {
 					String type = line.next();
 					if (GRAVITY_KEYWORD.equals(type)) {
-						model.setGravity(gravityCommand(line));
+						model.add(gravityCommand(line));
 					}
 					else if (VISCOSITY_KEYWORD.equals(type)) {
-						model.setViscosity(viscosityCommand(line));
+						model.add(viscosityCommand(line));
 					}
 					else if (CENTERMASS_KEYWORD.equals(type)) {
-						model.setCenterMass(centerMassCommand(line));
+						model.add(centerMassCommand(line));
 					}
 					else if (WALL_REPULSION_KEYWORD.equals(type)) {
-						model.setWallRepulsion(wallRepulsionCommand(line));
+						model.add(wallRepulsionCommand(line));
 					}                    
 				}
 			}
@@ -103,35 +103,35 @@ public class Factory {
 		double ks = line.nextDouble();
 		return new Spring(m1, m2, restLength, ks);
 	}
-	// create gravity vector from formatted data
-	private Vector gravityCommand (Scanner line) {
+	// create gravity force from formatted data
+	private Force gravityCommand (Scanner line) {
 		double angle = line.nextDouble();
 		double magnitude = line.nextDouble();
-		return new Vector(angle, magnitude);
-	}
-	
-	// create gravity vector from formatted data
-	private double viscosityCommand (Scanner line) {
-		return line.nextDouble();
-	}
-
-	private double[] centerMassCommand(Scanner line){
-		double magnitude = line.nextDouble();
-		double exponent = line.nextDouble();
-		double[] result = new double[2];
-		result[0] = magnitude;
-		result[1] = exponent;	
+		GravityForce result = new GravityForce(new Vector(angle, magnitude));
 		return result;
 	}
 	
-	private double[] wallRepulsionCommand(Scanner line){
-		double wallID = line.nextDouble();
+	// create viscosity force from formatted data
+	private Force viscosityCommand (Scanner line) {
+		double viscosity = line.nextDouble();
+		ViscosityForce result = new ViscosityForce(viscosity);
+		return result;
+	}
+
+	 // create centerMass force from formatted data
+	private Force centerMassCommand(Scanner line){
 		double magnitude = line.nextDouble();
 		double exponent = line.nextDouble();
-		double[] result = new double[3];
-		result[0] = wallID;
-		result[1] = magnitude;
-		result[2] = exponent;
+		CenterMassForce result = new CenterMassForce(magnitude, exponent);
+		return result;
+	}
+	
+	// create wallRepulsion force from formatted data
+	private Force wallRepulsionCommand(Scanner line){
+		int wallID = (int) line.nextDouble();
+		double magnitude = line.nextDouble();
+		double exponent = line.nextDouble();
+		WallRepulsionForce result = new WallRepulsionForce(wallID, magnitude, exponent);
 		return result;
 	}
 }
