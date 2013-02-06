@@ -9,8 +9,13 @@ import view.Canvas;
  * @author Robert C. Duvall
  */
 public final class Main {
-    // constants
+    /**
+     * The Dimension of the Canvas
+     */
     public static final Dimension SIZE = new Dimension(800, 600);
+    /**
+     * The Title of the Frame
+     */
     public static final String TITLE = "Springies!";
 
 
@@ -19,9 +24,10 @@ public final class Main {
     }
 
     /**
-     * Main --- where the program starts.
+     * Main --- where the program starts
+     * @param args the arguments used for main
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         // view of user's content
         Canvas display = new Canvas(SIZE);
         // container that will work with user's OS
