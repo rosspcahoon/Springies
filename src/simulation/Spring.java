@@ -11,7 +11,6 @@ import util.Vector;
 
 /**
  * XXX.
- * 
  * @author Robert C. Duvall
  */
 public class Spring extends Sprite {
@@ -22,7 +21,7 @@ public class Spring extends Sprite {
     private Mass myStart;
     private Mass myEnd;
     private double myLength;
-	private double myK;
+    private double myK;
 
     /**
      * XXX.
@@ -73,7 +72,7 @@ public class Spring extends Sprite {
     }
 
     // compute center of this spring
-    private static Location getCenter (Mass start, Mass end) {
+    private static Location getCenter(Mass start, Mass end) {
         return new Location((start.getX() + end.getX()) / 2, (start.getY() + end.getY()) / 2);
     }
 
@@ -81,12 +80,12 @@ public class Spring extends Sprite {
     private static Dimension getSize (Mass start, Mass end) {
         return new Dimension((int)start.distance(end), IMAGE_HEIGHT);
     }
-    
-    protected double getMyLength() {
-		return myLength;
-	}
 
-	protected void setMyLength(double myLength) {
-		this.myLength = myLength;
-	}
+    protected double getMyLength() {
+        return myLength;
+    }
+
+    protected void setMyLength(double myLength) {
+        this.myLength = myLength;
+    }
 }

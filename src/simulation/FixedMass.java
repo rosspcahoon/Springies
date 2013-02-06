@@ -9,11 +9,16 @@ import java.awt.Dimension;
  */
 
 public class FixedMass extends Mass {
-
-	public FixedMass(double x, double y, double mass) {
-		super(x,y,mass);
-	}
-	@Override
-	public void update (double elapsedTime, Dimension bounds) {
-	}
+    /**
+     * Constructs a FixedMass given x, y, and mass
+     * @param x the x coordinate for a FixedMass
+     * @param y the y coordinate for FixedMass
+     * @param mass the magnitude of mass for FixedMass
+     */
+    public FixedMass(final double x, final double y, final double mass) {
+        super(x, y, mass);
+    }
+    @Override
+    public void update(final double elapsedTime, final Dimension bounds) {
+    }
 }

@@ -10,13 +10,16 @@ import util.Vector;
 
 
 /**
- * XXX.
- * 
  * @author Robert C. Duvall
  */
 public class Mass extends Sprite {    
-    // reasonable default values
+    /**
+     * The Dimension for the mass.
+     */
     public static final Dimension DEFAULT_SIZE = new Dimension(16, 16);
+    /**
+     * The Pixmap for the mass.
+     */
     public static final Pixmap DEFUALT_IMAGE = new Pixmap("mass.gif");
 
     private double myMass;
@@ -24,17 +27,17 @@ public class Mass extends Sprite {
 
 
     /**
-     * XXX.
+     * The constructor for the given Mass.
+     * @param x the x location for the Mass
+     * @param y the y location for the Mass
+     * @param mass the magnitude of mass for Mass
      */
-    public Mass (double x, double y, double mass) {
+    public Mass (final double x, final double y, final double mass) {
         super(DEFUALT_IMAGE, new Location(x, y), DEFAULT_SIZE);
         myMass = mass;
         myAcceleration = new Vector();
     }
 
-    /**
-     * XXX.
-     */
     @Override
     public void update (double elapsedTime, Dimension bounds) {
         applyForce(getBounce(bounds));
@@ -45,9 +48,6 @@ public class Mass extends Sprite {
         super.update(elapsedTime, bounds);
     }
 
-    /**
-     * XXX.
-     */
     @Override
     public void paint (Graphics2D pen) {
         pen.setColor(Color.BLACK);
@@ -56,6 +56,7 @@ public class Mass extends Sprite {
 
     /**
      * Use the given force to change this mass's acceleration.
+     * @param force applies the given force to the mass.
      */
     public void applyForce (Vector force) {
         myAcceleration.sum(force);
@@ -63,30 +64,34 @@ public class Mass extends Sprite {
 
     /**
      * Convenience method.
+     * @param other the mass that is being used to find the distance of from current Mass.
      */
     public double distance (Mass other) {
         // this is a little awkward, so hide it
         return new Location(getX(), getY()).distance(new Location(other.getX(), other.getY()));
     }
-    
-    public double getMass(){
-    	return myMass;
+    /**
+     * Finds the magnitude of mass for the current Mass
+     * @return returns the mass.
+     */
+    public double getMass() {
+        return myMass;
     }
 
     // check for move out of bounds
     private Vector getBounce (Dimension bounds) {
         final double IMPULSE_MAGNITUDE = 2;
         Vector impulse = new Vector();
-        if (getLeft()-1 < 0) {
+        if (getLeft() - 1 < 0) {
             impulse = new Vector(RIGHT_DIRECTION, IMPULSE_MAGNITUDE);
         }
-        else if (getRight()+1 > bounds.width) {
+        else if (getRight() + 1 > bounds.width) {
             impulse = new Vector(LEFT_DIRECTION, IMPULSE_MAGNITUDE);
         }
-        if (getTop()-1 < 0) {
+        if (getTop() - 1 < 0) {
             impulse = new Vector(DOWN_DIRECTION, IMPULSE_MAGNITUDE);
         }
-        else if (getBottom()+1 > bounds.height) {
+        else if (getBottom() + 1 > bounds.height) {
             impulse = new Vector(UP_DIRECTION, IMPULSE_MAGNITUDE);
         }
         impulse.scale(getVelocity().getRelativeMagnitude(impulse));

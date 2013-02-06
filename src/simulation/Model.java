@@ -1,24 +1,25 @@
 package simulation;
 
-
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import view.Canvas;
 
 
 /**
  * XXX.
- * 
  * @author Robert C. Duvall
  */
 public class Model {
-    //This refuses to acknowledge the default package
-    //that main is in and be able to use the constants
-    //This isn't good practice
+
+    /**
+     * The Dimension of the Canvas we are painting on, this is a hack.
+     * This refuses to acknowledge the default package
+     * that main is in and be able to use the constants
+     * This isn't good practice
+     */
     public static final Dimension SIZE = new Dimension(800, 600);
-    // bounds and input for game
     private Canvas myView;
     // simulation state
     private List<Mass> myMasses;
@@ -28,6 +29,7 @@ public class Model {
 
     /**
      * Create a game of the given size with the given display for its shapes.
+     * @param canvas the Canvas that all of our assemblies will be painted on.
      */
     public Model (Canvas canvas) {
         myView = canvas;
@@ -38,6 +40,7 @@ public class Model {
 
     /**
      * Draw all elements of the simulation.
+     * @param pen the Graphics2D used to paint with.
      */
     public void paint (Graphics2D pen) {
         for (Spring s : mySprings) {
@@ -50,6 +53,7 @@ public class Model {
 
     /**
      * Update simulation for this moment, given the time since the last moment.
+     * @param elapsedTime the time that has elapsed since the Model was created.
      */
     public void update (double elapsedTime) {
         CenterMassForce.updateCenterMass(myMasses);
@@ -58,7 +62,7 @@ public class Model {
             s.update(elapsedTime, bounds);
         }
         for (Mass m : myMasses) {
-            for(Force f: myForces){
+            for (Force f: myForces) {
                 f.applyForce(m);
             }
             m.update(elapsedTime, bounds);
@@ -68,6 +72,7 @@ public class Model {
 
     /**
      * Add given mass to this simulation.
+     * @param mass the mass that is being added to the masses in the model.
      */
     public void add (Mass mass) {
         myMasses.add(mass);
@@ -75,6 +80,7 @@ public class Model {
 
     /**
      * Add given spring to this simulation.
+     * @param spring the spring that is being added to the springs in the model.
      */
     public void add (Spring spring) {
         mySprings.add(spring);
@@ -84,6 +90,7 @@ public class Model {
 
     /**
      * Add given force to this simulation.
+     * @param force the force that is being added to the forces in the model.
      */
     public void add (Force force) {
         myForces.add(force);
