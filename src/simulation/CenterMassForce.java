@@ -4,7 +4,7 @@ import java.util.List;
 
 import util.Location;
 
-public class CenterMassForce extends AbstractForce {
+public class CenterMassForce extends Force {
 	private double myMagnitude;
 	private double myExponent;
 	private static Location centerMassLocation=new Location();

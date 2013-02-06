@@ -2,7 +2,7 @@ package simulation;
 
 import util.Vector;
 
-public class ViscosityForce extends AbstractForce {
+public class ViscosityForce extends Force {
 	double myViscosity;
 	
 	public ViscosityForce(double viscosity)

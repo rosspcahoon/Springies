@@ -2,7 +2,7 @@ package simulation;
 
 import util.Vector;
 
-public class GravityForce extends AbstractForce {
+public class GravityForce extends Force {
 	private Vector myGravity;
 	
 	public GravityForce(Vector gravityValue)
