@@ -8,7 +8,6 @@ import util.Pixmap;
 import util.Sprite;
 import util.Vector;
 
-
 /**
  * XXX.
  * @author Robert C. Duvall
@@ -91,11 +90,11 @@ public class Spring extends Sprite {
         return new Dimension((int)start.distance(end), IMAGE_HEIGHT);
     }
 
-    protected double getMyLength() {
+    protected double getLength() {
         return myLength;
     }
 
-    protected void setMyLength(double length) {
+    protected void setLength(double length) {
         this.myLength = length;
     }
 }

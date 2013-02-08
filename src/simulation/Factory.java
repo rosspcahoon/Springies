@@ -52,6 +52,12 @@ public class Factory {
             e.printStackTrace();
         }
     }
+    
+    /**
+     * Loads the Forces information 
+     * @param model the current Model that information is being loaded into.
+     * @param modelFile the file the information about the Model is being read from.
+     */
 
     public void loadForces (Model model, File modelFile) {
         try {
@@ -120,7 +126,7 @@ public class Factory {
     }
 
     // create centerMass force from formatted data
-    private Force centerMassCommand(Scanner line){
+    private Force centerMassCommand(Scanner line) {
         double magnitude = line.nextDouble();
         double exponent = line.nextDouble();
         CenterMassForce result = new CenterMassForce(magnitude, exponent);
@@ -128,7 +134,7 @@ public class Factory {
     }
 
     // create wallRepulsion force from formatted data
-    private Force wallRepulsionCommand(Scanner line){
+    private Force wallRepulsionCommand(Scanner line) {
         int wallID = (int) line.nextDouble();
         double magnitude = line.nextDouble();
         double exponent = line.nextDouble();

@@ -57,6 +57,7 @@ public class Model {
      */
     public void update (double elapsedTime) {
         CenterMassForce.updateCenterMass(myMasses);
+        //Look here to change size of walled area
         Dimension bounds = myView.getSize();
         for (Spring s : mySprings) {
             s.update(elapsedTime, bounds);
