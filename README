@@ -4,3 +4,4 @@ Wayne You (wxy)
 Ross Cahoon (rpc8)
 
 
+When toggling Forces via keyboard input, holding to the key down will continue to toggle it every cycle.

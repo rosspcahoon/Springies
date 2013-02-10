@@ -1,5 +1,7 @@
 package simulation;
 
+import java.awt.event.KeyEvent;
+import java.util.Scanner;
 import util.Vector;
 /**
  * @author Wayne You and Ross Cahoon
@@ -12,10 +14,19 @@ public class GravityForce extends Force {
     private Vector myGravity;
     /**
      * Used to construct the Force object.
-     * @param gravityValue assigned to myGravity
+     * @param line transformed to a vector and assigned to myGravity
      */
-    public GravityForce(final Vector gravityValue) {
-        myGravity = new Vector(gravityValue);
+    public GravityForce(Scanner line) {
+        gravityCommand(line);
+        this.setKeyEvent(KeyEvent.VK_G);
+    }
+    /**
+     * Used to construct the Force object.
+     * @param gravity assigned to myGravity
+     */
+    public GravityForce(Vector gravity) {
+        myGravity = gravity;
+        this.setKeyEvent(KeyEvent.VK_G);
     }
 
     @Override
@@ -25,6 +36,14 @@ public class GravityForce extends Force {
             massGravity.scale(m.getMass());
             m.applyForce(massGravity);
         }
+    }
+
+    // create gravity vector from formatted data
+    private void gravityCommand(Scanner line) {
+        double angle = line.nextDouble();
+        double magnitude = line.nextDouble();
+        myGravity = new Vector(angle, magnitude);
+
     }
 
 }

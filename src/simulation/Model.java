@@ -25,6 +25,13 @@ public class Model {
     public static final Dimension SIZE = new Dimension(800, 600);
     private static final int KEY_N = KeyEvent.VK_N;
     private static final int KEY_C = KeyEvent.VK_C;
+    private static final int KEY_G = KeyEvent.VK_G;
+    private static final int KEY_V = KeyEvent.VK_V;
+    private static final int KEY_M = KeyEvent.VK_M;
+    private static final int KEY_1 = KeyEvent.VK_1;
+    private static final int KEY_2 = KeyEvent.VK_2;
+    private static final int KEY_3 = KeyEvent.VK_3;
+    private static final int KEY_4 = KeyEvent.VK_4;
     private static final int KEY_DOWN = KeyEvent.VK_DOWN;
     private static final int KEY_UP = KeyEvent.VK_UP;
     private static final int KEY_RIGHT = KeyEvent.VK_RIGHT;
@@ -36,6 +43,7 @@ public class Model {
     private List<Mass> myMasses;
     private List<Spring> mySprings;
     private Map<Integer, Force> myForces;
+    private int myLastKey;
 
     /**
      * Create a game of the given size with the given display for its shapes.
@@ -110,10 +118,13 @@ public class Model {
      * and respond accordingly.
      */
     public void inputHandler() {
-        int key = myView.getLastKeyPressed();
-        inputForAssemblies(key);
-        inputForForces(key);
-        inputForSizeChange(key);
+        int key = myView.getLastKeyPressed();       
+        if (myLastKey != key) {
+            inputForAssemblies(key);
+            inputForForces(key);
+            inputForSizeChange(key);
+        }        
+        myLastKey = key;
     }
 
     /**
@@ -135,12 +146,25 @@ public class Model {
      * @param key is the set of all keys that are pressed when inputForForces is called
      */
     public void inputForForces(int key) {
-        for (int k: myForces.keySet()) {
-            if (key == k) {
-                myForces.get(k).toggleForce();
+        if (myForces.keySet().contains(key)) {
+            for (int k: myForces.keySet()) {
+                if (key == k) {
+                    myForces.get(k).toggleForce();
+                }
             }
         }
-
+//        else if (key == KEY_G) {
+//            add(new GravityForce());
+//        }
+//        else if (key == KEY_V) {
+//            add(new ViscosityForce());
+//        }
+//        else if (key == KEY_M) {
+//            add(new CenterMassForce())
+//        }
+//        else if ((key == KEY_1) || (key == KEY_2) || (key == KEY_3) || (key == KEY_4)) {
+//            add(new WallRepulsionForce(key));
+//        }
     }
     /**
      * Handles input for all operations that involve

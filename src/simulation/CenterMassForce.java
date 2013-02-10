@@ -2,6 +2,7 @@ package simulation;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.Scanner;
 import util.Location;
 
 /**
@@ -24,10 +25,18 @@ public class CenterMassForce extends Force {
     private double myExponent;
     /**
      * Used to construct the Force object.
-     * @param magnitude assigned to myMagnitude.
-     * @param exponent assigned to myExponent.
+     * @param line assigned to myExponent and myMagnitude
      */
-    public CenterMassForce(final double magnitude, final double exponent) {
+    public CenterMassForce(Scanner line) {
+        centerMassCommand(line);
+        this.setKeyEvent(KeyEvent.VK_M);
+    }
+    /**
+     * Used to construct the Force object.
+     * @param magnitude assigned to myMagnitude
+     * @param exponent assigned to myExponent
+     */
+    public CenterMassForce(double magnitude, double exponent) {
         myMagnitude = magnitude;
         myExponent = exponent;
         this.setKeyEvent(KeyEvent.VK_M);
@@ -38,7 +47,6 @@ public class CenterMassForce extends Force {
      */
     public final void applyForce(final Mass m) {
         if (this.isForceActive()) {
-            System.out.println("Updating CoM");
             util.Vector tVect = new util.Vector(m.getCenter(), ourCenterMassLocation);
             double tDist = Math.abs(m.getCenter().distance(ourCenterMassLocation));
             tVect.setMagnitude(myMagnitude / Math.pow(tDist, myExponent));
@@ -59,5 +67,12 @@ public class CenterMassForce extends Force {
             tY += m.getY() * Math.abs(m.getMass());
         }
         ourCenterMassLocation.setLocation(tX / totalMass, tY / totalMass);
+    }
+    
+    // assign centerMass data from formatted data
+    private void centerMassCommand(Scanner line) {
+        myMagnitude = line.nextDouble();
+        myExponent = line.nextDouble();
+
     }
 }

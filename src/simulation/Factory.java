@@ -24,7 +24,7 @@ public class Factory {
     private Map<Integer, Mass> myMasses = new HashMap<Integer, Mass>();
 
 
-    
+
     /**
      * Loads the model information 
      * @param model the current Model that information is being loaded into.
@@ -61,16 +61,16 @@ public class Factory {
                 if (line.hasNext()) {
                     String type = line.next();
                     if (GRAVITY_KEYWORD.equals(type)) {
-                        model.add(gravityCommand(line));
+                        model.add(new GravityForce(line));
                     }
                     else if (VISCOSITY_KEYWORD.equals(type)) {
-                        model.add(viscosityCommand(line));
+                        model.add(new ViscosityForce(line));
                     }
                     else if (CENTERMASS_KEYWORD.equals(type)) {
-                        model.add(centerMassCommand(line));
+                        model.add(new CenterMassForce(line));
                     }
                     else if (WALL_REPULSION_KEYWORD.equals(type)) {
-                        model.add(wallRepulsionCommand(line));
+                        model.add(new WallRepulsionForce(line));
                     }                    
                 }
             }
@@ -103,36 +103,5 @@ public class Factory {
         double restLength = line.nextDouble();
         double ks = line.nextDouble();
         return new Spring(m1, m2, restLength, ks);
-    }
-    // create gravity force from formatted data
-    private Force gravityCommand (Scanner line) {
-        double angle = line.nextDouble();
-        double magnitude = line.nextDouble();
-        GravityForce result = new GravityForce(new Vector(angle, magnitude));
-        return result;
-    }
-
-    // create viscosity force from formatted data
-    private Force viscosityCommand (Scanner line) {
-        double viscosity = line.nextDouble();
-        ViscosityForce result = new ViscosityForce(viscosity);
-        return result;
-    }
-
-    // create centerMass force from formatted data
-    private Force centerMassCommand(Scanner line){
-        double magnitude = line.nextDouble();
-        double exponent = line.nextDouble();
-        CenterMassForce result = new CenterMassForce(magnitude, exponent);
-        return result;
-    }
-
-    // create wallRepulsion force from formatted data
-    private Force wallRepulsionCommand(Scanner line){
-        int wallID = (int) line.nextDouble();
-        double magnitude = line.nextDouble();
-        double exponent = line.nextDouble();
-        WallRepulsionForce result = new WallRepulsionForce(wallID, magnitude, exponent);
-        return result;
     }
 }

@@ -7,8 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -102,6 +102,13 @@ public class Canvas extends JComponent {
      */
     public Collection<Integer> getKeysPressed () {
         return Collections.unmodifiableSet(myKeys);
+    }
+    
+    /**
+     * Returns all keys currently pressed by the user.
+     */
+    public Collection<Integer> getKeysPressedModified () {
+        return myKeys;
     }
 
     /**
