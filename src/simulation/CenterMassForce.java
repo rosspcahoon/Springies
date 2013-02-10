@@ -1,5 +1,6 @@
 package simulation;
 
+import java.awt.event.KeyEvent;
 import java.util.List;
 import util.Location;
 
@@ -29,6 +30,7 @@ public class CenterMassForce extends Force {
     public CenterMassForce(final double magnitude, final double exponent) {
         myMagnitude = magnitude;
         myExponent = exponent;
+        this.setKeyEvent(KeyEvent.VK_M);
     }
     /**
      * Calculates and applies a force to the given mass.

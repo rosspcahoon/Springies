@@ -4,8 +4,10 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import view.Canvas;
 
 
@@ -40,11 +42,7 @@ public class Model {
     // simulation state
     private List<Mass> myMasses;
     private List<Spring> mySprings;
-    private List<Force> myForces;
-    
-
-
-
+    private Map<Integer, Force> myForces;
 
     /**
      * Create a game of the given size with the given display for its shapes.
@@ -54,7 +52,7 @@ public class Model {
         myView = canvas;
         myMasses = new ArrayList<Mass>();
         mySprings = new ArrayList<Spring>();
-        myForces = new ArrayList<Force>();
+        myForces = new HashMap<Integer, Force>();
     }
 
     /**
@@ -82,8 +80,8 @@ public class Model {
             s.update(elapsedTime, bounds);
         }
         for (Mass m : myMasses) {
-            for (Force f: myForces) {
-                f.applyForce(m);
+            for (int f: myForces.keySet()) {
+                myForces.get(f).applyForce(m);
             }
             m.update(elapsedTime, bounds);
         }
@@ -106,15 +104,18 @@ public class Model {
         mySprings.add(spring);
     }
 
-
-
     /**
      * Add given force to this simulation.
      * @param force the force that is being added to the forces in the model.
      */
     public void add (Force force) {
-        myForces.add(force);
-    }
+        if (myForces.get(force.getKeyEvent()) != null) {
+            myForces.put(force.getKeyEvent(), force);
+        }
+        else { 
+            System.out.println("ERROR: Force not added, duplicate KeyEvent found");
+        }
+    } 
     /**
      * Calls the input handler from the Canvas in
      * order to find out what buttons are pressed
@@ -126,7 +127,7 @@ public class Model {
         inputForForces(key);
         inputForSizeChange(key);
     }
-    
+
     /**
      * Handles input for all operations that involve
      * amending the assemblies.
@@ -146,27 +147,12 @@ public class Model {
      * @param key is the set of all keys that are pressed when inputForForces is called
      */
     public void inputForForces(int key) {
-        if (key == KEY_G) {
-            System.out.println("G \n");
+        for (int k: myForces.keySet()){
+            if(key == k){
+                myForces.get(k).toggleForce();
+            }
         }
-        if (key == KEY_V) {
-            System.out.println("V \n");
-        }
-        if (key == KEY_M) {
-            System.out.println("M \n");
-        }
-        if (key == KEY_ONE) {
-            System.out.println("1 \n");
-        }
-        if (key == KEY_TWO) {
-            System.out.println("2 \n");
-        }
-        if (key == KEY_THREE) {
-            System.out.println("3 \n");
-        }
-        if (key == KEY_FOUR) {
-            System.out.println("4 \n");
-        }
+
     }
     /**
      * Handles input for all operations that involve
