@@ -4,10 +4,19 @@ package simulation;
  * @author Wayne You and Ross Cahoon
  *
  */
-public abstract class Force {
+public class Force {
+    private boolean myForceActive;
     /**
      * Applies a force to a given mass
      * @param m the mass that the force is being applied
      */
-    public abstract void applyForce(Mass m);
+    public void applyForce(Mass m) {
+        
+    };
+    /**
+     * Checks to see if the force is being applied to assemblies
+     */
+    public boolean isForceActive() {
+        return myForceActive;
+    }
 }

@@ -2,7 +2,9 @@ package simulation;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import view.Canvas;
 
@@ -20,11 +22,28 @@ public class Model {
      * This isn't good practice
      */
     public static final Dimension SIZE = new Dimension(800, 600);
+    private static final int KEY_N = KeyEvent.VK_N;
+    private static final int KEY_C = KeyEvent.VK_C;
+    private static final int KEY_G = KeyEvent.VK_G;
+    private static final int KEY_V = KeyEvent.VK_V;
+    private static final int KEY_M = KeyEvent.VK_M;
+    private static final int KEY_DOWN = KeyEvent.VK_DOWN;
+    private static final int KEY_UP = KeyEvent.VK_UP;
+    private static final int KEY_RIGHT = KeyEvent.VK_RIGHT;
+    private static final int KEY_LEFT = KeyEvent.VK_LEFT;
+    private static final int KEY_ONE = KeyEvent.VK_1;
+    private static final int KEY_TWO = KeyEvent.VK_2;
+    private static final int KEY_THREE = KeyEvent.VK_3;
+    private static final int KEY_FOUR = KeyEvent.VK_4;
+
     private Canvas myView;
     // simulation state
     private List<Mass> myMasses;
     private List<Spring> mySprings;
     private List<Force> myForces;
+    
+
+
 
 
     /**
@@ -56,6 +75,7 @@ public class Model {
      * @param elapsedTime the time that has elapsed since the Model was created.
      */
     public void update (double elapsedTime) {
+        inputHandler();
         CenterMassForce.updateCenterMass(myMasses);
         Dimension bounds = myView.getSize();
         for (Spring s : mySprings) {
@@ -95,5 +115,76 @@ public class Model {
     public void add (Force force) {
         myForces.add(force);
     }
-
+    /**
+     * Calls the input handler from the Canvas in
+     * order to find out what buttons are pressed
+     * and respond accordingly.
+     */
+    public void inputHandler() {
+        int key = myView.getLastKeyPressed();
+        inputForAssemblies(key);
+        inputForForces(key);
+        inputForSizeChange(key);
+    }
+    
+    /**
+     * Handles input for all operations that involve
+     * amending the assemblies.
+     * @param key is the set of all keys that are pressed when inputForAssemblies is called
+     */
+    public void inputForAssemblies(int key) {
+        if (key == KEY_N)  {
+            System.out.println("N \n");
+        }
+        if (key == KEY_C) {
+            System.out.println("C \n");
+        }
+    }
+    /**
+     * Handles input for all operations that involve
+     * amending the forces.
+     * @param key is the set of all keys that are pressed when inputForForces is called
+     */
+    public void inputForForces(int key) {
+        if (key == KEY_G) {
+            System.out.println("G \n");
+        }
+        if (key == KEY_V) {
+            System.out.println("V \n");
+        }
+        if (key == KEY_M) {
+            System.out.println("M \n");
+        }
+        if (key == KEY_ONE) {
+            System.out.println("1 \n");
+        }
+        if (key == KEY_TWO) {
+            System.out.println("2 \n");
+        }
+        if (key == KEY_THREE) {
+            System.out.println("3 \n");
+        }
+        if (key == KEY_FOUR) {
+            System.out.println("4 \n");
+        }
+    }
+    /**
+     * Handles input for all operations that involve
+     * amending the size of the Canvas.
+     * @param key is the set of all keys that are pressed when inputForSizeChange is called
+     */
+    public void inputForSizeChange(int key) {
+        if (key == KEY_DOWN) {
+            System.out.println("DOWN \n");
+        }
+        if (key == KEY_UP) {
+            System.out.println("UP \n");
+        }
+        if (key == KEY_RIGHT) {
+            System.out.println("RIGHT \n");
+        }
+        if (key == KEY_LEFT) {
+            System.out.println("LEFT \n");
+        }
+    }
 }

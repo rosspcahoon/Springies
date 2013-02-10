@@ -20,9 +20,11 @@ public class GravityForce extends Force {
 
     @Override
     public final void applyForce(final Mass m) {
-        Vector massGravity = new Vector(myGravity);
-        massGravity.scale(m.getMass());
-        m.applyForce(massGravity);
+        if (this.isForceActive()) {
+            Vector massGravity = new Vector(myGravity);
+            massGravity.scale(m.getMass());
+            m.applyForce(massGravity);
+        }
     }
 
 }

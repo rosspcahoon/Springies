@@ -8,7 +8,6 @@ import util.Pixmap;
 import util.Sprite;
 import util.Vector;
 
-
 /**
  * XXX.
  * @author Robert C. Duvall

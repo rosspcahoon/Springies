@@ -20,10 +20,12 @@ public class ViscosityForce extends Force {
 
     @Override
     public void applyForce(final Mass m) {
-        Vector viscosityForce = new Vector(m.getVelocity());
-        viscosityForce.scale(myViscosity);
-        viscosityForce.negate();
-        m.applyForce(viscosityForce);
+        if (this.isForceActive()) {
+            Vector viscosityForce = new Vector(m.getVelocity());
+            viscosityForce.scale(myViscosity);
+            viscosityForce.negate();
+            m.applyForce(viscosityForce);
+        }
     }
 
 }

@@ -35,10 +35,12 @@ public class CenterMassForce extends Force {
      * @param m is the mass that the force is being applied to.
      */
     public final void applyForce(final Mass m) {
-        util.Vector tVect = new util.Vector(m.getCenter(), ourCenterMassLocation);
-        double tDist = Math.abs(m.getCenter().distance(ourCenterMassLocation));
-        tVect.setMagnitude(myMagnitude / Math.pow(tDist, myExponent));
-        m.applyForce(tVect);
+        if (this.isForceActive()) {
+            util.Vector tVect = new util.Vector(m.getCenter(), ourCenterMassLocation);
+            double tDist = Math.abs(m.getCenter().distance(ourCenterMassLocation));
+            tVect.setMagnitude(myMagnitude / Math.pow(tDist, myExponent));
+            m.applyForce(tVect);
+        }
     }
     /**
      * Calculates the center of mass location given a system of masses.
