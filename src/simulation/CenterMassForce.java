@@ -38,6 +38,7 @@ public class CenterMassForce extends Force {
      */
     public final void applyForce(final Mass m) {
         if (this.isForceActive()) {
+            System.out.println("Updating CoM");
             util.Vector tVect = new util.Vector(m.getCenter(), ourCenterMassLocation);
             double tDist = Math.abs(m.getCenter().distance(ourCenterMassLocation));
             tVect.setMagnitude(myMagnitude / Math.pow(tDist, myExponent));

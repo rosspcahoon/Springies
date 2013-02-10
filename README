@@ -3,11 +3,4 @@ README
 Wayne You (wxy)
 Ross Cahoon (rpc8)
 
-Plan of Action:
-
-Fixed Mass:
-Extend the mass class to create a subclass of called "FixedMass". We will control its behavior as a fixed mass by alterating relavent methods from Mass. When creating a mass in the Factory.java, we will assess whether it is a Fixed Mass when we read the mass value in Factory.massCommand. The rest of the functionality should follow from this.
-
-Muscle:
-Extend the Spring class to create a subclass called Muscle. We will alter relavent methods from Spring to induce the desired behavior. In Factory, we will create an additional key word to look for when we create Mass and Springs.We will ammend springCommand to create a different kind of spring based on the word. 
 

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import view.Canvas;
 
 
@@ -26,17 +25,11 @@ public class Model {
     public static final Dimension SIZE = new Dimension(800, 600);
     private static final int KEY_N = KeyEvent.VK_N;
     private static final int KEY_C = KeyEvent.VK_C;
-    private static final int KEY_G = KeyEvent.VK_G;
-    private static final int KEY_V = KeyEvent.VK_V;
-    private static final int KEY_M = KeyEvent.VK_M;
     private static final int KEY_DOWN = KeyEvent.VK_DOWN;
     private static final int KEY_UP = KeyEvent.VK_UP;
     private static final int KEY_RIGHT = KeyEvent.VK_RIGHT;
     private static final int KEY_LEFT = KeyEvent.VK_LEFT;
-    private static final int KEY_ONE = KeyEvent.VK_1;
-    private static final int KEY_TWO = KeyEvent.VK_2;
-    private static final int KEY_THREE = KeyEvent.VK_3;
-    private static final int KEY_FOUR = KeyEvent.VK_4;
+
 
     private Canvas myView;
     // simulation state
@@ -109,12 +102,7 @@ public class Model {
      * @param force the force that is being added to the forces in the model.
      */
     public void add (Force force) {
-        if (myForces.get(force.getKeyEvent()) != null) {
-            myForces.put(force.getKeyEvent(), force);
-        }
-        else { 
-            System.out.println("ERROR: Force not added, duplicate KeyEvent found");
-        }
+        myForces.put(force.getKeyEvent(), force);
     } 
     /**
      * Calls the input handler from the Canvas in
@@ -147,8 +135,8 @@ public class Model {
      * @param key is the set of all keys that are pressed when inputForForces is called
      */
     public void inputForForces(int key) {
-        for (int k: myForces.keySet()){
-            if(key == k){
+        for (int k: myForces.keySet()) {
+            if (key == k) {
                 myForces.get(k).toggleForce();
             }
         }

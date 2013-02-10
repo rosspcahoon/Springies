@@ -2,6 +2,6 @@ wall 1 1 2
 wall 2 1 2
 wall 3 1 2
 wall 4 1 2
-centermass 5 1
+centermass 10 1
 gravity 90 .2
 viscosity .1

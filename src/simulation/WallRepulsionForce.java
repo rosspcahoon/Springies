@@ -27,35 +27,34 @@ public class WallRepulsionForce extends Force {
         double angle = ((wallID + 1) * NINETY) % THREE_HUNDRED_SIXTY;
         myRepulsion = new Vector(angle, magnitude);
         myExponent = exponent;
+        this.setKeyEvent(wallID);
     }
     @Override
     public void applyForce(final Mass m) {
-        Vector scaledForce = new Vector(myRepulsion);
-        double distance = 0;
-        switch((int)scaledForce.getDirection() % THREE_HUNDRED_SIXTY) {
-            case ZERO: {
-                distance = Vector.distanceBetween(m.getCenter().y, Model.SIZE.height);
-                break;
+        if (this.isForceActive()) {
+            Vector scaledForce = new Vector(myRepulsion);
+            double distance = 0;
+            switch((int)scaledForce.getDirection() % THREE_HUNDRED_SIXTY) {
+                case ZERO: 
+                    distance = Vector.distanceBetween(m.getCenter().y, Model.SIZE.height);
+                    break;
+                case NINETY: 
+                    distance = m.getCenter().x;
+                    break;
+                case ONE_HUNDRED_EIGHTY:
+                    distance = m.getCenter().y;
+                    break;
+                case TWO_HUNDRED_SEVENTY:
+                    distance = Vector.distanceBetween(m.getCenter().x, Model.SIZE.width);
+                    break;
+                default:
+                    break;
             }
-            case NINETY: {
-                distance = m.getCenter().x;
-                break;
-            }
-            case ONE_HUNDRED_EIGHTY: {
-                distance = m.getCenter().y;
-                break;
-            }
-            case TWO_HUNDRED_SEVENTY: {
-                distance = Vector.distanceBetween(m.getCenter().x, Model.SIZE.width);
-                break;
-            }
-            default:
-                break;
+
+            scaledForce.scale(1 / (Math.pow(distance, myExponent)));
+
+            m.applyForce(scaledForce);
         }
-
-        scaledForce.scale(1 / (Math.pow(distance, myExponent)));
-
-        m.applyForce(scaledForce);
     }
 
 }
