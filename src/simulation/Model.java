@@ -59,6 +59,8 @@ public class Model {
         for (Mass m : myMasses) {
             m.paint(pen);
         }
+        
+        myMouse.paint(pen);
     }
 
     /**

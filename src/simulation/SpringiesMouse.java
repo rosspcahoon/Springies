@@ -1,6 +1,7 @@
 package simulation;
 
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.List;
 import view.Canvas;
@@ -19,16 +20,19 @@ public class SpringiesMouse {
     private boolean myWasClicked = false;
     private double mySpringLength;
     private Mass myConnectedMass;
+    private Spring myMouseSpring;
 
     /**
      * Applies force to the nearest mass and maintains the spring length until a mouse release.
      * 
-     * @param view The canvas containing the mouse data.
+     * @param mousePosition The location of the mouse right now.
      * @param masses The masses to be checked against.
+     * @param bounds The current limits of the view. These aren't actually used.
      */
     public void updateMouse (Point mousePosition, List<Mass> masses, Dimension bounds) {
-        if (masses.isEmpty())
+        if (masses.isEmpty()) {
             return;
+        }
 
         if (mousePosition != Canvas.NO_MOUSE_PRESSED && !myWasClicked) {
             Mass mouseMass = new FixedMass(mousePosition.getX(), mousePosition.getY(), -1);
@@ -36,8 +40,7 @@ public class SpringiesMouse {
             double minDistance = minMass.distance(mouseMass);
             for (Mass m : masses) {
                 double distance = mouseMass.distance(m);
-                if (minDistance > distance)
-                {
+                if (minDistance > distance) {
                     minDistance = distance;
                     minMass = m;
                 }
@@ -45,18 +48,30 @@ public class SpringiesMouse {
             myConnectedMass = minMass;
             mySpringLength = minDistance;
 
-            Spring mouseSpring = new Spring(myConnectedMass, mouseMass, mySpringLength, MOUSEKVAL);
-            mouseSpring.update(TIMELAPSE, bounds);
+            myMouseSpring = new Spring(myConnectedMass, mouseMass, mySpringLength, MOUSEKVAL);
+            myMouseSpring.update(TIMELAPSE, bounds);
+            
             myWasClicked = true;
         }
         else if (mousePosition != Canvas.NO_MOUSE_PRESSED && myWasClicked) {
             Mass mouseMass = new FixedMass(mousePosition.getX(), mousePosition.getY(), -1);
-            Spring mouseSpring = new Spring(myConnectedMass, mouseMass, mySpringLength, MOUSEKVAL);
-            mouseSpring.update(TIMELAPSE, bounds);
+            myMouseSpring = new Spring(myConnectedMass, mouseMass, mySpringLength, MOUSEKVAL);
+            myMouseSpring.update(TIMELAPSE, bounds);
+            
         }
-        else if (mousePosition == Canvas.NO_MOUSE_PRESSED)
-        {
+        else if (mousePosition == Canvas.NO_MOUSE_PRESSED) {
             myWasClicked = false;
+        }
+    }
+    
+    /**
+     * Paints the spring if the mouse is clicked.
+     * 
+     * @param pen The pen passed for painting.
+     */
+    public void paint(Graphics2D pen) {
+        if (myWasClicked) {
+            myMouseSpring.paint(pen);
         }
     }
 
