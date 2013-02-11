@@ -24,7 +24,7 @@ public class Factory {
     private Map<Integer, Mass> myMasses = new HashMap<Integer, Mass>();
 
 
-    
+
     /**
      * Loads the model information 
      * @param model the current Model that information is being loaded into.
@@ -67,16 +67,16 @@ public class Factory {
                 if (line.hasNext()) {
                     String type = line.next();
                     if (GRAVITY_KEYWORD.equals(type)) {
-                        model.add(gravityCommand(line));
+                        model.add(new GravityForce(line));
                     }
                     else if (VISCOSITY_KEYWORD.equals(type)) {
-                        model.add(viscosityCommand(line));
+                        model.add(new ViscosityForce(line));
                     }
                     else if (CENTERMASS_KEYWORD.equals(type)) {
-                        model.add(centerMassCommand(line));
+                        model.add(new CenterMassForce(line));
                     }
                     else if (WALL_REPULSION_KEYWORD.equals(type)) {
-                        model.add(wallRepulsionCommand(line));
+                        model.add(new WallRepulsionForce(line));
                     }                    
                 }
             }
