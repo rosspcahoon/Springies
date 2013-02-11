@@ -120,7 +120,7 @@ public class Factory {
     }
 
     // create centerMass force from formatted data
-    private Force centerMassCommand(Scanner line){
+    private Force centerMassCommand(Scanner line) {
         double magnitude = line.nextDouble();
         double exponent = line.nextDouble();
         CenterMassForce result = new CenterMassForce(magnitude, exponent);
@@ -128,7 +128,7 @@ public class Factory {
     }
 
     // create wallRepulsion force from formatted data
-    private Force wallRepulsionCommand(Scanner line){
+    private Force wallRepulsionCommand(Scanner line) {
         int wallID = (int) line.nextDouble();
         double magnitude = line.nextDouble();
         double exponent = line.nextDouble();

@@ -33,22 +33,18 @@ public class WallRepulsionForce extends Force {
         Vector scaledForce = new Vector(myRepulsion);
         double distance = 0;
         switch((int)scaledForce.getDirection() % THREE_HUNDRED_SIXTY) {
-            case ZERO: {
-                distance = Vector.distanceBetween(m.getCenter().y, Model.SIZE.height);
+            case ZERO:
+                distance = Vector.distanceBetween(m.getCenter().y, Model.DEFAULT_DIMENSION.height);
                 break;
-            }
-            case NINETY: {
+            case NINETY:
                 distance = m.getCenter().x;
                 break;
-            }
-            case ONE_HUNDRED_EIGHTY: {
+            case ONE_HUNDRED_EIGHTY:
                 distance = m.getCenter().y;
                 break;
-            }
-            case TWO_HUNDRED_SEVENTY: {
-                distance = Vector.distanceBetween(m.getCenter().x, Model.SIZE.width);
+            case TWO_HUNDRED_SEVENTY:
+                distance = Vector.distanceBetween(m.getCenter().x, Model.DEFAULT_DIMENSION.width);
                 break;
-            }
             default:
                 break;
         }
