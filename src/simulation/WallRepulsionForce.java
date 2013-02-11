@@ -59,7 +59,7 @@ public class WallRepulsionForce extends Force {
             double distance = 0;
             switch((int)scaledForce.getDirection() % THREE_HUNDRED_SIXTY) {
                 case ZERO: 
-                    distance = Vector.distanceBetween(m.getCenter().y, Model.SIZE.height);
+                    distance = Vector.distanceBetween(m.getCenter().y, Model.getSize().height);
                     break;
                 case NINETY: 
                     distance = m.getCenter().x;
@@ -68,7 +68,7 @@ public class WallRepulsionForce extends Force {
                     distance = m.getCenter().y;
                     break;
                 case TWO_HUNDRED_SEVENTY:
-                    distance = Vector.distanceBetween(m.getCenter().x, Model.SIZE.width);
+                    distance = Vector.distanceBetween(m.getCenter().x, Model.getSize().width);
                     break;
                 default:
                     break;

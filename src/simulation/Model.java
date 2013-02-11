@@ -16,13 +16,8 @@ import view.Canvas;
  */
 public class Model {
 
-    /**
-     * The Dimension of the Canvas we are painting on, this is a hack.
-     * This refuses to acknowledge the default package
-     * that main is in and be able to use the constants
-     * This isn't good practice
-     */
-    public static final Dimension SIZE = new Dimension(800, 600);
+
+
     private static final int KEY_N = KeyEvent.VK_N;
     private static final int KEY_C = KeyEvent.VK_C;
     private static final int KEY_G = KeyEvent.VK_G;
@@ -37,8 +32,13 @@ public class Model {
     private static final int KEY_RIGHT = KeyEvent.VK_RIGHT;
     private static final int KEY_LEFT = KeyEvent.VK_LEFT;
     private static final int SIZE_CHANGE_VALUE = 10;
-
-
+    /**
+     * The Dimension of the Canvas we are painting on, this is a hack.
+     * This refuses to acknowledge the default package
+     * that main is in and be able to use the constants
+     * This isn't good practice
+     */
+    private final static Dimension mySize = new Dimension(800, 600);
     private Canvas myView;
     // simulation state
     private List<Mass> myMasses;
@@ -176,15 +176,25 @@ public class Model {
     public void inputForSizeChange(int key) {
         if (key == KEY_DOWN) {
             myView.setSize(myView.getWidth(), myView.getHeight() + SIZE_CHANGE_VALUE);
+            mySize.setSize(mySize.getWidth(), mySize.getHeight() + SIZE_CHANGE_VALUE);
         }
         if (key == KEY_UP) {
             myView.setSize(myView.getWidth(), myView.getHeight() - SIZE_CHANGE_VALUE);
+            mySize.setSize(mySize.getWidth(), mySize.getHeight() - SIZE_CHANGE_VALUE);
         }
         if (key == KEY_RIGHT) {
             myView.setSize(myView.getWidth() + SIZE_CHANGE_VALUE, myView.getHeight());
+            mySize.setSize(mySize.getWidth() + SIZE_CHANGE_VALUE, mySize.getHeight());
         }
         if (key == KEY_LEFT) {
             myView.setSize(myView.getWidth() - SIZE_CHANGE_VALUE, myView.getHeight());
+            mySize.setSize(mySize.getWidth() - SIZE_CHANGE_VALUE, mySize.getHeight());
         }
+    }
+    /**
+     *Returns the Dimension of the model
+     */
+    public static Dimension getSize() {
+        return mySize;
     }
 }
