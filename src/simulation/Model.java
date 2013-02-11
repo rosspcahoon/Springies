@@ -12,6 +12,7 @@ import view.Canvas;
 
 /**
  * XXX.
+ * 
  * @author Robert C. Duvall
  */
 public class Model {
@@ -33,22 +34,25 @@ public class Model {
     private static final int KEY_LEFT = KeyEvent.VK_LEFT;
     private static final int SIZE_CHANGE_VALUE = 10;
     /**
-     * The Dimension of the Canvas we are painting on, this is a hack.
-     * This refuses to acknowledge the default package
-     * that main is in and be able to use the constants
-     * This isn't good practice
+     * The Dimension of the Canvas we are painting on, this is a hack. This
+     * refuses to acknowledge the default package that main is in and be able to
+     * use the constants This isn't good practice
      */
-    private final static Dimension mySize = new Dimension(800, 600);
-    private Canvas myView;
+    private static final Dimension DEFAULT_DIMENSION = new Dimension(800, 600);
+    private static Dimension mySize = new Dimension(DEFAULT_DIMENSION.width, DEFAULT_DIMENSION.height);
     // simulation state
+    private Canvas myView;
     private List<Mass> myMasses;
     private List<Spring> mySprings;
     private Map<Integer, Force> myForces;
     private int myLastKey;
+    private SpringiesMouse myMouse = new SpringiesMouse();
 
     /**
      * Create a game of the given size with the given display for its shapes.
-     * @param canvas the Canvas that all of our assemblies will be painted on.
+     * 
+     * @param canvas
+     *        the Canvas that all of our assemblies will be painted on.
      */
     public Model (Canvas canvas) {
         myView = canvas;
@@ -59,7 +63,9 @@ public class Model {
 
     /**
      * Draw all elements of the simulation.
-     * @param pen the Graphics2D used to paint with.
+     * 
+     * @param pen
+     *        the Graphics2D used to paint with.
      */
     public void paint (Graphics2D pen) {
         for (Spring s : mySprings) {
@@ -68,31 +74,36 @@ public class Model {
         for (Mass m : myMasses) {
             m.paint(pen);
         }
+
+        myMouse.paint(pen);
     }
 
     /**
      * Update simulation for this moment, given the time since the last moment.
-     * @param elapsedTime the time that has elapsed since the Model was created.
+     * 
+     * @param elapsedTime
+     *        the time that has elapsed since the Model was created.
      */
     public void update (double elapsedTime) {
         inputHandler();
+        myMouse.updateMouse(myView.getLastMousePosition(), myMasses, mySize);
         CenterMassForce.updateCenterMass(myMasses);
-        Dimension bounds = myView.getSize();
         for (Spring s : mySprings) {
-            s.update(elapsedTime, bounds);
+            s.update(elapsedTime, mySize);
         }
         for (Mass m : myMasses) {
             for (int f: myForces.keySet()) {
                 myForces.get(f).applyForce(m);
             }
-            m.update(elapsedTime, bounds);
+            m.update(elapsedTime, mySize);
         }
     }
 
-
     /**
      * Add given mass to this simulation.
-     * @param mass the mass that is being added to the masses in the model.
+     * 
+     * @param mass
+     *        the mass that is being added to the masses in the model.
      */
     public void add (Mass mass) {
         myMasses.add(mass);
@@ -100,7 +111,9 @@ public class Model {
 
     /**
      * Add given spring to this simulation.
-     * @param spring the spring that is being added to the springs in the model.
+     * 
+     * @param spring
+     *        the spring that is being added to the springs in the model.
      */
     public void add (Spring spring) {
         mySprings.add(spring);
@@ -108,7 +121,9 @@ public class Model {
 
     /**
      * Add given force to this simulation.
-     * @param force the force that is being added to the forces in the model.
+     * 
+     * @param force
+     *        the force that is being added to the forces in the model.
      */
     public void add (Force force) {
         myForces.put(force.getKeyEvent(), force);

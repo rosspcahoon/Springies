@@ -22,7 +22,7 @@ public class WallRepulsionForce extends Force {
 
     private Vector myRepulsion;
     private double myExponent;
-    
+
     /**
      * Used to construct the WallRepulsionForce object.
      * @param keyevent the ID of a wall that generates a force
@@ -102,7 +102,6 @@ public class WallRepulsionForce extends Force {
             return 0;
         }
     }
-    
     /**
      * Given a KeyEvent determines the number the force 
      * @param keyevent keyevent that needs a wallId for it

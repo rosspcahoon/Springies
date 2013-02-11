@@ -104,4 +104,35 @@ public class Factory {
         double ks = line.nextDouble();
         return new Spring(m1, m2, restLength, ks);
     }
+    // create gravity force from formatted data
+    private Force gravityCommand (Scanner line) {
+        double angle = line.nextDouble();
+        double magnitude = line.nextDouble();
+        GravityForce result = new GravityForce(new Vector(angle, magnitude));
+        return result;
+    }
+
+    // create viscosity force from formatted data
+    private Force viscosityCommand (Scanner line) {
+        double viscosity = line.nextDouble();
+        ViscosityForce result = new ViscosityForce(viscosity);
+        return result;
+    }
+
+    // create centerMass force from formatted data
+    private Force centerMassCommand(Scanner line) {
+        double magnitude = line.nextDouble();
+        double exponent = line.nextDouble();
+        CenterMassForce result = new CenterMassForce(magnitude, exponent);
+        return result;
+    }
+
+    // create wallRepulsion force from formatted data
+    private Force wallRepulsionCommand(Scanner line) {
+        int wallID = (int) line.nextDouble();
+        double magnitude = line.nextDouble();
+        double exponent = line.nextDouble();
+        WallRepulsionForce result = new WallRepulsionForce(wallID, magnitude, exponent);
+        return result;
+    }
 }
