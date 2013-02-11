@@ -27,7 +27,6 @@ public class Force {
      */
     public void toggleForce() {
         myForceActive = !myForceActive;
-        System.out.println("Force toggled to: " + myForceActive);
     }
     /**
      * Returns the KeyEvent this force responds too

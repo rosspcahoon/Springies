@@ -11,6 +11,8 @@ import util.Location;
  * all information used in these calculations
  */
 public class CenterMassForce extends Force {
+    private static final double DEFAULT_MAGNITUDE = 10;
+    private static final double DEFAULT_EXPONENT = 2;
     /**
      * The location where the force is directed.
      */
@@ -23,6 +25,15 @@ public class CenterMassForce extends Force {
      * The exponent of the center of mass force.
      */
     private double myExponent;
+    /**
+     * Used to construct the default CenterMassForce object.
+     */
+    public CenterMassForce() {
+        System.out.println("Made CenterMassForce");
+        myMagnitude = DEFAULT_MAGNITUDE;
+        myExponent = DEFAULT_EXPONENT;
+        this.setKeyEvent(KeyEvent.VK_M);
+    }
     /**
      * Used to construct the Force object.
      * @param line assigned to myExponent and myMagnitude

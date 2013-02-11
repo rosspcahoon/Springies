@@ -8,12 +8,21 @@ import util.Vector;
  * Calculates and tracks the gravity force.
  */
 public class GravityForce extends Force {
+    private static final Vector DEFAULT_GRAVITY = new Vector(90, .2);
     /**
      * The vector for gravity force.
      */
     private Vector myGravity;
     /**
-     * Used to construct the Force object.
+     * Used to construct the default GravityForce object.
+     */
+    public GravityForce() {
+        System.out.println("Made Gravity Force");
+        myGravity = DEFAULT_GRAVITY;
+        this.setKeyEvent(KeyEvent.VK_G);
+    }
+    /**
+     * Used to construct the GravityForce object.
      * @param line transformed to a vector and assigned to myGravity
      */
     public GravityForce(Scanner line) {
@@ -21,7 +30,7 @@ public class GravityForce extends Force {
         this.setKeyEvent(KeyEvent.VK_G);
     }
     /**
-     * Used to construct the Force object.
+     * Used to construct the GravityForce object.
      * @param gravity assigned to myGravity
      */
     public GravityForce(Vector gravity) {

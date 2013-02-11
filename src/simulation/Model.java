@@ -153,18 +153,18 @@ public class Model {
                 }
             }
         }
-//        else if (key == KEY_G) {
-//            add(new GravityForce());
-//        }
-//        else if (key == KEY_V) {
-//            add(new ViscosityForce());
-//        }
-//        else if (key == KEY_M) {
-//            add(new CenterMassForce())
-//        }
-//        else if ((key == KEY_1) || (key == KEY_2) || (key == KEY_3) || (key == KEY_4)) {
-//            add(new WallRepulsionForce(key));
-//        }
+        else if (key == KEY_G) {
+            add(new GravityForce());
+        }
+        else if (key == KEY_V) {
+            add(new ViscosityForce());
+        }
+        else if (key == KEY_M) {
+            add(new CenterMassForce());
+        }
+        else if ((key == KEY_1) || (key == KEY_2) || (key == KEY_3) || (key == KEY_4)) {
+            add(new WallRepulsionForce(key));
+        }
     }
     /**
      * Handles input for all operations that involve

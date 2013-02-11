@@ -8,12 +8,21 @@ import util.Vector;
  * Calculates and tracks the viscosity force.
  */
 public class ViscosityForce extends Force {
+    private static final double DEAFULT_VISCOSITY = .1;
     /**
      * The scale of the viscosity force.
      */
     private double myViscosity;
     /**
-     * Used to construct the Force object.
+     * Used to construct the default ViscosityForce object.
+     */
+    public ViscosityForce() {
+        System.out.println("Made Viscosity Force");
+        myViscosity = DEAFULT_VISCOSITY;
+        this.setKeyEvent(KeyEvent.VK_V);
+    }
+    /**
+     * Used to construct the ViscosityForce object.
      * @param line double is extracted from this and assigned to myViscosity
      */
     public ViscosityForce(Scanner line) {
@@ -21,7 +30,7 @@ public class ViscosityForce extends Force {
         this.setKeyEvent(KeyEvent.VK_V);
     }
     /**
-     * Used to construct the Force object.
+     * Used to construct the ViscosityForce object.
      * @param viscosity assigned to myViscosity
      */
     public ViscosityForce(final double viscosity) {

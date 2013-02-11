@@ -8,6 +8,8 @@ import util.Vector;
  * Calculates and tracks the WallRepulsionForce.
  */
 public class WallRepulsionForce extends Force {
+    private static final double DEFAULT_MAGNITUDE = 1;
+    private static final double DEFAULT_EXPONENT = 2;
     private static final int ZERO = 0;
     private static final int ONE = 1;
     private static final int TWO = 2;
@@ -20,23 +22,32 @@ public class WallRepulsionForce extends Force {
 
     private Vector myRepulsion;
     private double myExponent;
+    
+    /**
+     * Used to construct the WallRepulsionForce object.
+     * @param keyevent the ID of a wall that generates a force
+     */
+    public WallRepulsionForce(int keyevent) {
+        int wallID = determineWallID(keyevent);
+        myRepulsion = new Vector(determineAngle(wallID), DEFAULT_MAGNITUDE);
+        myExponent = DEFAULT_EXPONENT;
+        this.setKeyEvent(determineKeyEvent(wallID));
+    }
 
     /**
-     * Used to construct the Force object given a line
+     * Used to construct the WallRepulsionForce object given a line
      * @param line transforms data from the scanner to create a WallRepulsionForce object
      */
     public WallRepulsionForce(Scanner line) {
         wallRepulsionCommand(line);
     }
     /**
-     * Used to construct the Force object.
+     * Used to construct the WallRepulsionForce object.
      * @param wallID the ID of a wall that generates a force
      * @param magnitude the magnitude of the force
      * @param exponent the exponent of the force
      */
-    public WallRepulsionForce(final int wallID, final double magnitude, final double exponent)
-    {
-
+    public WallRepulsionForce(int wallID, double magnitude, double exponent) {
         myRepulsion = new Vector(determineAngle(wallID), magnitude);
         myExponent = exponent;
         this.setKeyEvent(determineKeyEvent(wallID));
@@ -86,6 +97,29 @@ public class WallRepulsionForce extends Force {
         }
         else if (wallID == FOUR) {
             return KeyEvent.VK_4;
+        }
+        else {
+            return 0;
+        }
+    }
+    
+    /**
+     * Given a KeyEvent determines the number the force 
+     * @param keyevent keyevent that needs a wallId for it
+     */
+
+    public int determineWallID(int keyevent) {
+        if (keyevent == KeyEvent.VK_1) {
+            return ONE;        
+        }
+        else if (keyevent == KeyEvent.VK_2) {
+            return TWO;
+        }
+        else if (keyevent == KeyEvent.VK_3) {
+            return THREE;
+        }
+        else if (keyevent == KeyEvent.VK_4) {
+            return FOUR;
         }
         else {
             return 0;
