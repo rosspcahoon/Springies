@@ -9,15 +9,12 @@ import java.util.List;
 import java.util.Map;
 import view.Canvas;
 
-
 /**
  * XXX.
  * 
- * @author Robert C. Duvall
+ * @author Robert C. Duvall, Ross Cahoon, Wayne You
  */
 public class Model {
-
-
 
     private static final int KEY_N = KeyEvent.VK_N;
     private static final int KEY_C = KeyEvent.VK_C;
@@ -38,8 +35,8 @@ public class Model {
      * refuses to acknowledge the default package that main is in and be able to
      * use the constants This isn't good practice
      */
-    private static final Dimension DEFAULT_DIMENSION = new Dimension(800, 600);
-    private static Dimension mySize = new Dimension(DEFAULT_DIMENSION.width, DEFAULT_DIMENSION.height);
+    private static final Dimension DEFAULT_DIM = new Dimension(800, 600);
+    private static Dimension ourSize = new Dimension(DEFAULT_DIM.width, DEFAULT_DIM.height);
     // simulation state
     private Canvas myView;
     private List<Mass> myMasses;
@@ -50,9 +47,7 @@ public class Model {
 
     /**
      * Create a game of the given size with the given display for its shapes.
-     * 
-     * @param canvas
-     *        the Canvas that all of our assemblies will be painted on.
+     * @param canvas the Canvas that all of our assemblies will be painted on.
      */
     public Model (Canvas canvas) {
         myView = canvas;
@@ -63,9 +58,7 @@ public class Model {
 
     /**
      * Draw all elements of the simulation.
-     * 
-     * @param pen
-     *        the Graphics2D used to paint with.
+     * @param pen the Graphics2D used to paint with.
      */
     public void paint (Graphics2D pen) {
         for (Spring s : mySprings) {
@@ -74,41 +67,31 @@ public class Model {
         for (Mass m : myMasses) {
             m.paint(pen);
         }
-
         myMouse.paint(pen);
     }
 
     /**
      * Update simulation for this moment, given the time since the last moment.
-     * 
-     * @param elapsedTime
-     *        the time that has elapsed since the Model was created.
+     * @param elapsedTime the time that has elapsed since the Model was created.
      */
     public void update (double elapsedTime) {
         inputHandler();
-        myMouse.updateMouse(myView.getLastMousePosition(), myMasses, mySize);
+        myMouse.updateMouse(myView.getLastMousePosition(), myMasses, ourSize);
         CenterMassForce.updateCenterMass(myMasses);
-<<<<<<< HEAD
-        //Look here to change size of walled area
-        Dimension bounds = myView.getSize();
-=======
->>>>>>> ross
         for (Spring s : mySprings) {
-            s.update(elapsedTime, mySize);
+            s.update(elapsedTime, ourSize);
         }
         for (Mass m : myMasses) {
             for (int f: myForces.keySet()) {
                 myForces.get(f).applyForce(m);
             }
-            m.update(elapsedTime, mySize);
+            m.update(elapsedTime, ourSize);
         }
     }
 
     /**
      * Add given mass to this simulation.
-     * 
-     * @param mass
-     *        the mass that is being added to the masses in the model.
+     * @param mass the mass that is being added to the masses in the model.
      */
     public void add (Mass mass) {
         myMasses.add(mass);
@@ -116,9 +99,7 @@ public class Model {
 
     /**
      * Add given spring to this simulation.
-     * 
-     * @param spring
-     *        the spring that is being added to the springs in the model.
+     * @param spring the spring that is being added to the springs in the model.
      */
     public void add (Spring spring) {
         mySprings.add(spring);
@@ -126,9 +107,7 @@ public class Model {
 
     /**
      * Add given force to this simulation.
-     * 
-     * @param force
-     *        the force that is being added to the forces in the model.
+     * @param force the force that is being added to the forces in the model.
      */
     public void add (Force force) {
         myForces.put(force.getKeyEvent(), force);
@@ -149,8 +128,7 @@ public class Model {
     }
 
     /**
-     * Handles input for all operations that involve
-     * amending the assemblies.
+     * Handles input for all operations that involve amending the assemblies.
      * @param key is the set of all keys that are pressed when inputForAssemblies is called
      */
     public void inputForAssemblies(int key) {
@@ -163,8 +141,7 @@ public class Model {
         }
     }
     /**
-     * Handles input for all operations that involve
-     * amending the forces.
+     * Handles input for all operations that involve amending the forces.
      * @param key is the set of all keys that are pressed when inputForForces is called
      */
     public void inputForForces(int key) {
@@ -196,25 +173,25 @@ public class Model {
     public void inputForSizeChange(int key) {
         if (key == KEY_DOWN) {
             myView.setSize(myView.getWidth(), myView.getHeight() + SIZE_CHANGE_VALUE);
-            mySize.setSize(mySize.getWidth(), mySize.getHeight() + SIZE_CHANGE_VALUE);
+            ourSize.setSize(ourSize.getWidth(), ourSize.getHeight() + SIZE_CHANGE_VALUE);
         }
         if (key == KEY_UP) {
             myView.setSize(myView.getWidth(), myView.getHeight() - SIZE_CHANGE_VALUE);
-            mySize.setSize(mySize.getWidth(), mySize.getHeight() - SIZE_CHANGE_VALUE);
+            ourSize.setSize(ourSize.getWidth(), ourSize.getHeight() - SIZE_CHANGE_VALUE);
         }
         if (key == KEY_RIGHT) {
             myView.setSize(myView.getWidth() + SIZE_CHANGE_VALUE, myView.getHeight());
-            mySize.setSize(mySize.getWidth() + SIZE_CHANGE_VALUE, mySize.getHeight());
+            ourSize.setSize(ourSize.getWidth() + SIZE_CHANGE_VALUE, ourSize.getHeight());
         }
         if (key == KEY_LEFT) {
             myView.setSize(myView.getWidth() - SIZE_CHANGE_VALUE, myView.getHeight());
-            mySize.setSize(mySize.getWidth() - SIZE_CHANGE_VALUE, mySize.getHeight());
+            ourSize.setSize(ourSize.getWidth() - SIZE_CHANGE_VALUE, ourSize.getHeight());
         }
     }
     /**
      *Returns the Dimension of the model
      */
     public static Dimension getSize() {
-        return mySize;
+        return ourSize;
     }
 }

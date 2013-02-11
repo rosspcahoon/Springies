@@ -3,7 +3,7 @@ package simulation;
 import java.awt.Dimension;
 /**
  * Muscle is like a Spring but its length changes harmonically
- * @author Wayne You and Ross Cahoon
+ * @author Wayne You, Ross Cahoon
  *
  */
 public class Muscle extends Spring {
