@@ -29,7 +29,6 @@ public class CenterMassForce extends Force {
      * Used to construct the default CenterMassForce object.
      */
     public CenterMassForce() {
-        System.out.println("Made CenterMassForce");
         myMagnitude = DEFAULT_MAGNITUDE;
         myExponent = DEFAULT_EXPONENT;
         this.setKeyEvent(KeyEvent.VK_M);

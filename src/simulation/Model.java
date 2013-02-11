@@ -36,6 +36,7 @@ public class Model {
     private static final int KEY_UP = KeyEvent.VK_UP;
     private static final int KEY_RIGHT = KeyEvent.VK_RIGHT;
     private static final int KEY_LEFT = KeyEvent.VK_LEFT;
+    private static final int SIZE_CHANGE_VALUE = 10;
 
 
     private Canvas myView;
@@ -134,10 +135,11 @@ public class Model {
      */
     public void inputForAssemblies(int key) {
         if (key == KEY_N)  {
-            System.out.println("N \n");
+            myView.loadAdditionalModel();
         }
         if (key == KEY_C) {
-            System.out.println("C \n");
+            myMasses.clear();
+            mySprings.clear();
         }
     }
     /**
@@ -173,16 +175,16 @@ public class Model {
      */
     public void inputForSizeChange(int key) {
         if (key == KEY_DOWN) {
-            System.out.println("DOWN \n");
+            myView.setSize(myView.getWidth(), myView.getHeight() + SIZE_CHANGE_VALUE);
         }
         if (key == KEY_UP) {
-            System.out.println("UP \n");
+            myView.setSize(myView.getWidth(), myView.getHeight() - SIZE_CHANGE_VALUE);
         }
         if (key == KEY_RIGHT) {
-            System.out.println("RIGHT \n");
+            myView.setSize(myView.getWidth() + SIZE_CHANGE_VALUE, myView.getHeight());
         }
         if (key == KEY_LEFT) {
-            System.out.println("LEFT \n");
+            myView.setSize(myView.getWidth() - SIZE_CHANGE_VALUE, myView.getHeight());
         }
     }
 }

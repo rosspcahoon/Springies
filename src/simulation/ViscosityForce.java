@@ -17,7 +17,6 @@ public class ViscosityForce extends Force {
      * Used to construct the default ViscosityForce object.
      */
     public ViscosityForce() {
-        System.out.println("Made Viscosity Force");
         myViscosity = DEAFULT_VISCOSITY;
         this.setKeyEvent(KeyEvent.VK_V);
     }

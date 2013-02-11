@@ -17,7 +17,6 @@ public class GravityForce extends Force {
      * Used to construct the default GravityForce object.
      */
     public GravityForce() {
-        System.out.println("Made Gravity Force");
         myGravity = DEFAULT_GRAVITY;
         this.setKeyEvent(KeyEvent.VK_G);
     }
