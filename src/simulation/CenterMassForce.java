@@ -1,6 +1,6 @@
 package simulation;
 
-import java.awt.event.KeyEvent;
+
 import java.util.List;
 import java.util.Scanner;
 import util.Location;
@@ -11,6 +11,8 @@ import util.Location;
  * all information used in these calculations
  */
 public class CenterMassForce extends Force {
+    
+    private static boolean ourCenterMassActive = true;
     private static final double DEFAULT_MAGNITUDE = 10;
     private static final double DEFAULT_EXPONENT = 2;
     /**
@@ -31,7 +33,6 @@ public class CenterMassForce extends Force {
     public CenterMassForce() {
         myMagnitude = DEFAULT_MAGNITUDE;
         myExponent = DEFAULT_EXPONENT;
-        this.setKeyEvent(KeyEvent.VK_M);
     }
     /**
      * Used to construct the Force object.
@@ -39,7 +40,6 @@ public class CenterMassForce extends Force {
      */
     public CenterMassForce(Scanner line) {
         centerMassCommand(line);
-        this.setKeyEvent(KeyEvent.VK_M);
     }
     /**
      * Used to construct the Force object.
@@ -49,14 +49,13 @@ public class CenterMassForce extends Force {
     public CenterMassForce(double magnitude, double exponent) {
         myMagnitude = magnitude;
         myExponent = exponent;
-        this.setKeyEvent(KeyEvent.VK_M);
     }
     /**
      * Calculates and applies a force to the given mass.
      * @param m is the mass that the force is being applied to.
      */
     public final void applyForce(final Mass m) {
-        if (this.isForceActive()) {
+        if (ourCenterMassActive) {
             util.Vector tVect = new util.Vector(m.getCenter(), ourCenterMassLocation);
             double tDist = Math.abs(m.getCenter().distance(ourCenterMassLocation));
             tVect.setMagnitude(myMagnitude / Math.pow(tDist, myExponent));
@@ -84,5 +83,12 @@ public class CenterMassForce extends Force {
         myMagnitude = line.nextDouble();
         myExponent = line.nextDouble();
 
+    }
+    
+    /**
+     * Toggles whether the center of mass force is active.
+     */
+    public static void toggleCenterMassForce() {
+        ourCenterMassActive = !ourCenterMassActive;
     }
 }

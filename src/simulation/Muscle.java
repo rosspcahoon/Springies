@@ -30,7 +30,7 @@ public class Muscle extends Spring {
         temp = changeInTime % (Math.PI * 2);
         myTime = (myTime + temp) % (Math.PI * 2);
 
-        setMyLength(myStartLength + waveFunction());
+        setLength(myStartLength + waveFunction());
     }
     protected double waveFunction() {
         return myAmplitude * Math.sin(myTime);

@@ -4,9 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import view.Canvas;
 
 /**
@@ -15,20 +13,6 @@ import view.Canvas;
  * @author Robert C. Duvall, Ross Cahoon, Wayne You
  */
 public class Model {
-
-    private static final int KEY_N = KeyEvent.VK_N;
-    private static final int KEY_C = KeyEvent.VK_C;
-    private static final int KEY_G = KeyEvent.VK_G;
-    private static final int KEY_V = KeyEvent.VK_V;
-    private static final int KEY_M = KeyEvent.VK_M;
-    private static final int KEY_1 = KeyEvent.VK_1;
-    private static final int KEY_2 = KeyEvent.VK_2;
-    private static final int KEY_3 = KeyEvent.VK_3;
-    private static final int KEY_4 = KeyEvent.VK_4;
-    private static final int KEY_DOWN = KeyEvent.VK_DOWN;
-    private static final int KEY_UP = KeyEvent.VK_UP;
-    private static final int KEY_RIGHT = KeyEvent.VK_RIGHT;
-    private static final int KEY_LEFT = KeyEvent.VK_LEFT;
     private static final int SIZE_CHANGE_VALUE = 10;
     /**
      * The Dimension of the Canvas we are painting on, this is a hack. This
@@ -41,7 +25,7 @@ public class Model {
     private Canvas myView;
     private List<Mass> myMasses;
     private List<Spring> mySprings;
-    private Map<Integer, Force> myForces;
+    private List<Force> myForces;
     private int myLastKey;
     private SpringiesMouse myMouse = new SpringiesMouse();
 
@@ -53,7 +37,7 @@ public class Model {
         myView = canvas;
         myMasses = new ArrayList<Mass>();
         mySprings = new ArrayList<Spring>();
-        myForces = new HashMap<Integer, Force>();
+        myForces = new ArrayList<Force>();
     }
 
     /**
@@ -82,8 +66,8 @@ public class Model {
             s.update(elapsedTime, ourSize);
         }
         for (Mass m : myMasses) {
-            for (int f: myForces.keySet()) {
-                myForces.get(f).applyForce(m);
+            for (Force f: myForces) {
+                f.applyForce(m);
             }
             m.update(elapsedTime, ourSize);
         }
@@ -110,7 +94,7 @@ public class Model {
      * @param force the force that is being added to the forces in the model.
      */
     public void add (Force force) {
-        myForces.put(force.getKeyEvent(), force);
+        myForces.add(force);
     } 
     /**
      * Calls the input handler from the Canvas in
@@ -132,10 +116,10 @@ public class Model {
      * @param key is the set of all keys that are pressed when inputForAssemblies is called
      */
     public void inputForAssemblies(int key) {
-        if (key == KEY_N)  {
+        if (key == KeyEvent.VK_N)  {
             myView.loadAdditionalModel();
         }
-        if (key == KEY_C) {
+        if (key == KeyEvent.VK_C) {
             myMasses.clear();
             mySprings.clear();
         }
@@ -145,24 +129,26 @@ public class Model {
      * @param key is the set of all keys that are pressed when inputForForces is called
      */
     public void inputForForces(int key) {
-        if (myForces.keySet().contains(key)) {
-            for (int k: myForces.keySet()) {
-                if (key == k) {
-                    myForces.get(k).toggleForce();
-                }
-            }
+        if (key == KeyEvent.VK_G) {
+            GravityForce.toggleGravity();
         }
-        else if (key == KEY_G) {
-            add(new GravityForce());
+        else if (key == KeyEvent.VK_V) {
+            ViscosityForce.toggleViscosity();
         }
-        else if (key == KEY_V) {
-            add(new ViscosityForce());
+        else if (key == KeyEvent.VK_M) {
+            CenterMassForce.toggleCenterMassForce();
         }
-        else if (key == KEY_M) {
-            add(new CenterMassForce());
+        else if (key == KeyEvent.VK_1) {
+            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.TOP_WALL_ID);
         }
-        else if ((key == KEY_1) || (key == KEY_2) || (key == KEY_3) || (key == KEY_4)) {
-            add(new WallRepulsionForce(key));
+        else if (key == KeyEvent.VK_2) {
+            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.RIGHT_WALL_ID);
+        }
+        else if (key == KeyEvent.VK_3) {
+            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.BOTTOM_WALL_ID);
+        }
+        else if (key == KeyEvent.VK_4) {
+            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.LEFT_WALL_ID);
         }
     }
     /**
@@ -171,19 +157,19 @@ public class Model {
      * @param key is the set of all keys that are pressed when inputForSizeChange is called
      */
     public void inputForSizeChange(int key) {
-        if (key == KEY_DOWN) {
+        if (key == KeyEvent.VK_DOWN) {
             myView.setSize(myView.getWidth(), myView.getHeight() + SIZE_CHANGE_VALUE);
             ourSize.setSize(ourSize.getWidth(), ourSize.getHeight() + SIZE_CHANGE_VALUE);
         }
-        if (key == KEY_UP) {
+        if (key == KeyEvent.VK_UP) {
             myView.setSize(myView.getWidth(), myView.getHeight() - SIZE_CHANGE_VALUE);
             ourSize.setSize(ourSize.getWidth(), ourSize.getHeight() - SIZE_CHANGE_VALUE);
         }
-        if (key == KEY_RIGHT) {
+        if (key == KeyEvent.VK_RIGHT) {
             myView.setSize(myView.getWidth() + SIZE_CHANGE_VALUE, myView.getHeight());
             ourSize.setSize(ourSize.getWidth() + SIZE_CHANGE_VALUE, ourSize.getHeight());
         }
-        if (key == KEY_LEFT) {
+        if (key == KeyEvent.VK_LEFT) {
             myView.setSize(myView.getWidth() - SIZE_CHANGE_VALUE, myView.getHeight());
             ourSize.setSize(ourSize.getWidth() - SIZE_CHANGE_VALUE, ourSize.getHeight());
         }

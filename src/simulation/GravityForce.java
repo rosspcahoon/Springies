@@ -1,6 +1,5 @@
 package simulation;
 
-import java.awt.event.KeyEvent;
 import java.util.Scanner;
 import util.Vector;
 /**
@@ -8,6 +7,9 @@ import util.Vector;
  * Calculates and tracks the gravity force.
  */
 public class GravityForce extends Force {
+    
+    //w
+    private static boolean ourGravityActive = true;
     private static final Vector DEFAULT_GRAVITY = new Vector(90, .2);
     /**
      * The vector for gravity force.
@@ -18,7 +20,6 @@ public class GravityForce extends Force {
      */
     public GravityForce() {
         myGravity = DEFAULT_GRAVITY;
-        this.setKeyEvent(KeyEvent.VK_G);
     }
     /**
      * Used to construct the GravityForce object.
@@ -26,7 +27,6 @@ public class GravityForce extends Force {
      */
     public GravityForce(Scanner line) {
         gravityCommand(line);
-        this.setKeyEvent(KeyEvent.VK_G);
     }
     /**
      * Used to construct the GravityForce object.
@@ -34,12 +34,11 @@ public class GravityForce extends Force {
      */
     public GravityForce(Vector gravity) {
         myGravity = gravity;
-        this.setKeyEvent(KeyEvent.VK_G);
     }
 
     @Override
     public final void applyForce(final Mass m) {
-        if (this.isForceActive()) {
+        if (ourGravityActive) {
             Vector massGravity = new Vector(myGravity);
             massGravity.scale(m.getMass());
             m.applyForce(massGravity);
@@ -52,6 +51,13 @@ public class GravityForce extends Force {
         double magnitude = line.nextDouble();
         myGravity = new Vector(angle, magnitude);
 
+    }
+    
+    /**
+     * Toggles whether gravity is active.
+     */
+    public static void toggleGravity () {
+        ourGravityActive = !ourGravityActive;
     }
 
 }
