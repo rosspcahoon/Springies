@@ -1,5 +1,6 @@
 package simulation;
 
+import java.awt.event.KeyEvent;
 import java.util.Scanner;
 import util.Vector;
 /**
@@ -7,10 +8,9 @@ import util.Vector;
  * Calculates and tracks the gravity force.
  */
 public class GravityForce extends Force {
-    
-    //w
-    private static boolean ourGravityActive = true;
-    private static final Vector DEFAULT_GRAVITY = new Vector(90, .2);
+
+    private static boolean myGravityActive = true;
+    private final Vector DEFAULT_GRAVITY = new Vector(90, .2);
     /**
      * The vector for gravity force.
      */
@@ -31,7 +31,7 @@ public class GravityForce extends Force {
 
     @Override
     public final void applyForce(final Mass m) {
-        if (ourGravityActive) {
+        if (myGravityActive) {
             Vector massGravity = new Vector(myGravity);
             massGravity.scale(m.getMass());
             m.applyForce(massGravity);
@@ -45,12 +45,14 @@ public class GravityForce extends Force {
         myGravity = new Vector(angle, magnitude);
 
     }
-    
+
     /**
      * Toggles whether gravity is active.
      */
-    public static void toggleGravity () {
-        ourGravityActive = !ourGravityActive;
+    public void toggle (int key) {
+        if (key == KeyEvent.VK_G) {
+            myGravityActive = !myGravityActive;
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package simulation;
 
+import java.awt.event.KeyEvent;
 import java.util.Scanner;
 import util.Vector;
 /**
@@ -7,8 +8,8 @@ import util.Vector;
  * Calculates and tracks the viscosity force.
  */
 public class ViscosityForce extends Force {
-    
-    private static boolean ourViscosityActive = true;
+
+    private static boolean myViscosityActive = true;
     private static final double DEAFULT_VISCOSITY = .1;
     /**
      * The scale of the viscosity force.
@@ -30,23 +31,22 @@ public class ViscosityForce extends Force {
 
     @Override
     public void applyForce(final Mass m) {
-        if (ourViscosityActive) {
+        if (myViscosityActive) {
             Vector viscosityForce = new Vector(m.getVelocity());
             viscosityForce.scale(myViscosity);
             viscosityForce.negate();
             m.applyForce(viscosityForce);
         }
     }
-    
+
     // create viscosity force from formatted data
     private void viscosityCommand(Scanner line) {
         myViscosity = line.nextDouble();        
     }
 
-    /**
-     * Toggles whether viscosity is active.
-     */
-    public static void toggleViscosity () {
-        ourViscosityActive = !ourViscosityActive;
+    public void toggle (int key) {
+        if (key == KeyEvent.VK_V) {
+            myViscosityActive = !myViscosityActive;
+        }
     }
 }

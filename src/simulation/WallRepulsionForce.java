@@ -1,5 +1,6 @@
 package simulation;
 
+import java.awt.event.KeyEvent;
 import java.util.Scanner;
 import util.Vector;
 
@@ -20,12 +21,12 @@ public class WallRepulsionForce extends Force {
     public static final int BOTTOM_WALL_ID = 3;
     public static final int LEFT_WALL_ID = 4;
 
-    private static boolean[] ourActiveWalls = {true, true, true, true};
+    private static boolean[] myActiveWalls = {true, true, true, true};
 
     private Vector myRepulsion;
     private double myExponent;
     private int myWallID;
-    
+
     /**
      * Default value constructor.
      * @param wallID Which wall the repulsion is from.
@@ -46,11 +47,12 @@ public class WallRepulsionForce extends Force {
     public WallRepulsionForce (int wallID, double magnitude, double exponent) {
         myRepulsion = new Vector(determineAngle(wallID), magnitude);
         myExponent = exponent;
+        myActiveWalls = new boolean[];
     }
 
     @Override
     public void applyForce (final Mass m) {
-        if (!ourActiveWalls[myWallID - 1]) {
+        if (!myActiveWalls[myWallID - 1]) {
             return;
         }
         Vector scaledForce = new Vector(myRepulsion);
@@ -109,7 +111,18 @@ public class WallRepulsionForce extends Force {
      * Toggled the specific wall repulsion force given a wallID
      * @param wallID The wallID of the force to toggle
      */
-    public static void toggleWallRepulsion(int wallID) {
-        ourActiveWalls[wallID - 1] = !ourActiveWalls[wallID - 1];
+    public void toggle (int key) {
+        if (key == KeyEvent.VK_1) {
+            myActiveWalls[0] = !myActiveWalls[0];
+        }
+        else if (key == KeyEvent.VK_2) {
+            myActiveWalls[1] = !myActiveWalls[1];
+        }
+        else if (key == KeyEvent.VK_3) {
+            myActiveWalls[2] = !myActiveWalls[2];
+        }
+        else if (key == KeyEvent.VK_4) {
+            myActiveWalls[3] = !myActiveWalls[3];
+        }
     }
 }

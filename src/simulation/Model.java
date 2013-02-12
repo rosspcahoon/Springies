@@ -107,27 +107,30 @@ public class Model {
      * @param key is the set of all keys that are pressed when inputForForces is called
      */
     public void inputForForces(int key) {
-        if (key == KeyEvent.VK_G) {
-            GravityForce.toggleGravity();
+        for (Force f: myForces){
+            f.toggle(key);
         }
-        else if (key == KeyEvent.VK_V) {
-            ViscosityForce.toggleViscosity();
-        }
-        else if (key == KeyEvent.VK_M) {
-            CenterMassForce.toggleCenterMassForce();
-        }
-        else if (key == KeyEvent.VK_1) {
-            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.TOP_WALL_ID);
-        }
-        else if (key == KeyEvent.VK_2) {
-            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.RIGHT_WALL_ID);
-        }
-        else if (key == KeyEvent.VK_3) {
-            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.BOTTOM_WALL_ID);
-        }
-        else if (key == KeyEvent.VK_4) {
-            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.LEFT_WALL_ID);
-        }
+//        if (key == KeyEvent.VK_G) {
+//            GravityForce.toggleGravity (key);
+//        }
+//        else if (key == KeyEvent.VK_V) {
+//            ViscosityForce.toggleViscosity();
+//        }
+//        else if (key == KeyEvent.VK_M) {
+//            CenterMassForce.toggleCenterMassForce();
+//        }
+//        else if (key == KeyEvent.VK_1) {
+//            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.TOP_WALL_ID);
+//        }
+//        else if (key == KeyEvent.VK_2) {
+//            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.RIGHT_WALL_ID);
+//        }
+//        else if (key == KeyEvent.VK_3) {
+//            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.BOTTOM_WALL_ID);
+//        }
+//        else if (key == KeyEvent.VK_4) {
+//            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.LEFT_WALL_ID);
+//        }
     }
     /**
      * Handles input for all operations that involve

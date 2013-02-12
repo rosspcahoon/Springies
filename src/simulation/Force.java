@@ -12,4 +12,6 @@ public abstract class Force {
      * @param m the mass that the force is being applied
      */
     public abstract void applyForce(Mass m);
+    
+    public abstract void toggle (int key);
 }

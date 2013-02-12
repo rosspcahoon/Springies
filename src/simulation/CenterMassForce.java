@@ -1,6 +1,7 @@
 package simulation;
 
 
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Scanner;
 import util.Location;
@@ -11,7 +12,7 @@ import util.Location;
  * all information used in these calculations
  */
 public class CenterMassForce extends Force {
-    
+
     private static boolean ourCenterMassActive = true;
     private static final double DEFAULT_MAGNITUDE = 10;
     private static final double DEFAULT_EXPONENT = 2;
@@ -62,11 +63,13 @@ public class CenterMassForce extends Force {
         myExponent = line.nextDouble();
 
     }
-    
+
     /**
      * Toggles whether the center of mass force is active.
      */
-    public static void toggleCenterMassForce() {
-        ourCenterMassActive = !ourCenterMassActive;
+    public void toggle (int key) {
+        if (key == KeyEvent.VK_M){
+            ourCenterMassActive = !ourCenterMassActive;
+        }
     }
 }
