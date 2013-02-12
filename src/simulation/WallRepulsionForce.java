@@ -25,15 +25,6 @@ public class WallRepulsionForce extends Force {
     private Vector myRepulsion;
     private double myExponent;
     private int myWallID;
-
-    /**
-     * Used to construct the WallRepulsionForce object given a line
-     * 
-     * @param line transforms data from the scanner to create a WallRepulsionForce object
-     */
-    public WallRepulsionForce (Scanner line) {
-        wallRepulsionCommand(line);
-    }
     
     /**
      * Default value constructor.

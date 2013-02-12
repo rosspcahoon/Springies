@@ -2,6 +2,7 @@ package simulation;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -31,6 +32,7 @@ public class Factory {
      * @param modelFile the file the information about the Model is being read from.
      */
     public void loadModel (Model model, File modelFile) {
+        Assembly currentAssembly = new Assembly();
         try {
             Scanner input = new Scanner(modelFile);
             while (input.hasNext()) {
@@ -38,13 +40,14 @@ public class Factory {
                 if (line.hasNext()) {
                     String type = line.next();
                     if (MASS_KEYWORD.equals(type)) {
-                        model.add(massCommand(line));
+                        currentAssembly.add(massCommand(line));
                     }
                     else if (SPRING_KEYWORD.equals(type)) {
-                        model.add(springCommand(line));
+                        currentAssembly.add(springCommand(line));
                     }
                 }
             }
+            model.add(currentAssembly);
             input.close();
         }
         catch (FileNotFoundException e) {
@@ -67,16 +70,16 @@ public class Factory {
                 if (line.hasNext()) {
                     String type = line.next();
                     if (GRAVITY_KEYWORD.equals(type)) {
-                        model.add(new GravityForce(line));
+                        model.add(gravityCommand(line));
                     }
                     else if (VISCOSITY_KEYWORD.equals(type)) {
-                        model.add(new ViscosityForce(line));
+                        model.add(viscosityCommand(line));
                     }
                     else if (CENTERMASS_KEYWORD.equals(type)) {
-                        model.add(new CenterMassForce(line));
+                        model.add(centerMassCommand(line));
                     }
                     else if (WALL_REPULSION_KEYWORD.equals(type)) {
-                        model.add(new WallRepulsionForce(line));
+                        model.add(wallRepulsionCommand(line));
                     }                    
                 }
             }

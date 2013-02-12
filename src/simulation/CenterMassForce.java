@@ -36,13 +36,6 @@ public class CenterMassForce extends Force {
     }
     /**
      * Used to construct the Force object.
-     * @param line assigned to myExponent and myMagnitude
-     */
-    public CenterMassForce(Scanner line) {
-        centerMassCommand(line);
-    }
-    /**
-     * Used to construct the Force object.
      * @param magnitude assigned to myMagnitude
      * @param exponent assigned to myExponent
      */
@@ -62,22 +55,7 @@ public class CenterMassForce extends Force {
             m.applyForce(tVect);
         }
     }
-    /**
-     * Calculates the center of mass location given a system of masses.
-     * @param masses is the system used for calculation
-     */
-    public static void updateCenterMass(final List<Mass> masses) {
-        double totalMass = 0;
-        double tX = 0;
-        double tY = 0;
-        for (Mass m : masses) {
-            totalMass += Math.abs(m.getMass());
-            tX += m.getX() * Math.abs(m.getMass());
-            tY += m.getY() * Math.abs(m.getMass());
-        }
-        ourCenterMassLocation.setLocation(tX / totalMass, tY / totalMass);
-    }
-    
+
     // assign centerMass data from formatted data
     private void centerMassCommand(Scanner line) {
         myMagnitude = line.nextDouble();

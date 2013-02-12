@@ -23,13 +23,6 @@ public class GravityForce extends Force {
     }
     /**
      * Used to construct the GravityForce object.
-     * @param line transformed to a vector and assigned to myGravity
-     */
-    public GravityForce(Scanner line) {
-        gravityCommand(line);
-    }
-    /**
-     * Used to construct the GravityForce object.
      * @param gravity assigned to myGravity
      */
     public GravityForce(Vector gravity) {

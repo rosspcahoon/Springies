@@ -3,6 +3,7 @@ package simulation;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 import view.Canvas;
 
@@ -21,24 +22,27 @@ public class SpringiesMouse {
     private double mySpringLength;
     private Mass myConnectedMass;
     private Spring myMouseSpring;
-
+    private ArrayList<Mass> myMasses = new ArrayList<Mass>(); 
     /**
      * Applies force to the nearest mass and maintains the spring length until a mouse release.
      * 
      * @param mousePosition The location of the mouse right now.
-     * @param masses The masses to be checked against.
+     * @param assemblies The masses to be checked against.
      * @param bounds The current limits of the view. These aren't actually used.
      */
-    public void updateMouse (Point mousePosition, List<Mass> masses, Dimension bounds) {
-        if (masses.isEmpty()) {
+    public void updateMouse (Point mousePosition, List<Assembly> assemblies, Dimension bounds) {
+        if (assemblies.isEmpty()) {
             return;
+        }
+        for (Assembly a: assemblies) {
+            myMasses.addAll(a.getMasses());
         }
 
         if (mousePosition != Canvas.NO_MOUSE_PRESSED && !myWasClicked) {
             Mass mouseMass = new FixedMass(mousePosition.getX(), mousePosition.getY(), -1);
-            Mass minMass = masses.get(0);
+            Mass minMass = myMasses.get(0);
             double minDistance = minMass.distance(mouseMass);
-            for (Mass m : masses) {
+            for (Mass m : myMasses) {
                 double distance = mouseMass.distance(m);
                 if (minDistance > distance) {
                     minDistance = distance;

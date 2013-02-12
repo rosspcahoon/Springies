@@ -22,13 +22,6 @@ public class ViscosityForce extends Force {
     }
     /**
      * Used to construct the ViscosityForce object.
-     * @param line double is extracted from this and assigned to myViscosity
-     */
-    public ViscosityForce(Scanner line) {
-        viscosityCommand(line);
-    }
-    /**
-     * Used to construct the ViscosityForce object.
      * @param viscosity assigned to myViscosity
      */
     public ViscosityForce(final double viscosity) {

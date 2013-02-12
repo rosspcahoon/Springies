@@ -23,8 +23,7 @@ public class Model {
     private static Dimension ourSize = new Dimension(DEFAULT_DIM.width, DEFAULT_DIM.height);
     // simulation state
     private Canvas myView;
-    private List<Mass> myMasses;
-    private List<Spring> mySprings;
+    private List <Assembly> myAssemblies;
     private List<Force> myForces;
     private int myLastKey;
     private SpringiesMouse myMouse = new SpringiesMouse();
@@ -35,8 +34,7 @@ public class Model {
      */
     public Model (Canvas canvas) {
         myView = canvas;
-        myMasses = new ArrayList<Mass>();
-        mySprings = new ArrayList<Spring>();
+        myAssemblies = new ArrayList<Assembly>();
         myForces = new ArrayList<Force>();
     }
 
@@ -45,11 +43,8 @@ public class Model {
      * @param pen the Graphics2D used to paint with.
      */
     public void paint (Graphics2D pen) {
-        for (Spring s : mySprings) {
-            s.paint(pen);
-        }
-        for (Mass m : myMasses) {
-            m.paint(pen);
+        for (Assembly a: myAssemblies) {
+            a.paint(pen);
         }
         myMouse.paint(pen);
     }
@@ -60,33 +55,15 @@ public class Model {
      */
     public void update (double elapsedTime) {
         inputHandler();
-        myMouse.updateMouse(myView.getLastMousePosition(), myMasses, ourSize);
-        CenterMassForce.updateCenterMass(myMasses);
-        for (Spring s : mySprings) {
-            s.update(elapsedTime, ourSize);
-        }
-        for (Mass m : myMasses) {
-            for (Force f: myForces) {
-                f.applyForce(m);
-            }
-            m.update(elapsedTime, ourSize);
+        myMouse.updateMouse(myView.getLastMousePosition(), myAssemblies, ourSize);
+        for (Assembly a: myAssemblies) {
+            a.update(elapsedTime, myForces);
         }
     }
 
-    /**
-     * Add given mass to this simulation.
-     * @param mass the mass that is being added to the masses in the model.
-     */
-    public void add (Mass mass) {
-        myMasses.add(mass);
-    }
 
-    /**
-     * Add given spring to this simulation.
-     * @param spring the spring that is being added to the springs in the model.
-     */
-    public void add (Spring spring) {
-        mySprings.add(spring);
+    public void add (Assembly assembly) {
+        myAssemblies.add(assembly);
     }
 
     /**
@@ -120,8 +97,9 @@ public class Model {
             myView.loadAdditionalModel();
         }
         if (key == KeyEvent.VK_C) {
-            myMasses.clear();
-            mySprings.clear();
+            for (Assembly a: myAssemblies) {
+                a.clear();
+            }
         }
     }
     /**

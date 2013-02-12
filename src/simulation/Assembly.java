@@ -1,17 +1,27 @@
 package simulation;
 
+import java.awt.Graphics2D;
+import java.util.ArrayList;
 import java.util.List;
 import util.Location;
-
+import util.Vector;
+/**
+ * Manages groups of masses that were loaded together
+ * @author Ross Cahoon and Wayne You
+ *
+ */
 public class Assembly {
-    private List<Mass> myMasses;
-    private List<Spring> mySprings;
-    private Location myCenterMassLocation = new Location();
+    private static List<Mass> myMasses;
+    private static List<Spring> mySprings;
+    private static Location myCenterMassLocation = new Location();
+    
+    public Assembly () {
+        myMasses = new ArrayList<Mass>();
+        mySprings = new ArrayList<Spring>();
+    }
     
     public void update (double elapsedTime, List<Force> forces) {
-        //We could re-assign the center of mass location before each run.
-        //I'm not sure what exactly to do designwise here.
-        CenterMassForce.updateCenterMass(myMasses);
+        updateCenterMass(myMasses);
         for (Spring s : mySprings) {
             s.update(elapsedTime, Model.getSize());
         }
@@ -24,10 +34,24 @@ public class Assembly {
     }
     
     /**
+     * Draw all elements of the simulation.
+     * @param pen the Graphics2D used to paint with.
+     */
+    public void paint (Graphics2D pen) {
+        for (Spring s : mySprings) {
+            s.paint(pen);
+        }
+        for (Mass m : myMasses) {
+            m.paint(pen);
+        }
+    }
+
+    
+    /**
      * Calculates the center of mass location given a system of masses.
      * @param masses is the system used for calculation
      */
-    private void updateCenterMass(final List<Mass> masses) {
+    public static void updateCenterMass(final List<Mass> masses) {
         double totalMass = 0;
         double tX = 0;
         double tY = 0;
@@ -38,4 +62,23 @@ public class Assembly {
         }
         myCenterMassLocation.setLocation(tX / totalMass, tY / totalMass);
     }
+    
+    public void add (Spring spring) {
+        mySprings.add(spring); 
+    }
+    
+    public void add (Mass mass) {
+        myMasses.add(mass);
+    }
+    
+    public List<Mass> getMasses(){
+        return myMasses;
+    }
+
+    public void clear () {
+        myMasses.clear();
+        mySprings.clear();
+        
+    }
+    
 }
