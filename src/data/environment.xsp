@@ -2,11 +2,6 @@ wall 1 1 2
 wall 2 1 2
 wall 3 1 2
 wall 4 1 2
-<<<<<<< HEAD
-centermass 2 1
-gravity 90 .02
-=======
 centermass 10 1
 gravity 90 .2
->>>>>>> ross
 viscosity .1

@@ -12,10 +12,10 @@ import util.Vector;
 public class WallRepulsionForce extends Force {
     private static final double DEFAULT_MAGNITUDE = 1;
     private static final double DEFAULT_EXPONENT = 2;
-    private static final int UP = 0;
-    private static final int LEFT = 90;
-    private static final int DOWN = 180;
-    private static final int RIGHT = 270;
+    private static final int RIGHT = 0;
+    private static final int DOWN = 90;
+    private static final int LEFT = 180;
+    private static final int UP = 270;
     public static final int TOP_WALL_ID = 1;
     public static final int RIGHT_WALL_ID = 2;
     public static final int BOTTOM_WALL_ID = 3;
@@ -47,7 +47,7 @@ public class WallRepulsionForce extends Force {
     public WallRepulsionForce (int wallID, double magnitude, double exponent) {
         myRepulsion = new Vector(determineAngle(wallID), magnitude);
         myExponent = exponent;
-        myActiveWalls = new boolean[];
+        myWallID = wallID;
     }
 
     @Override
@@ -59,7 +59,7 @@ public class WallRepulsionForce extends Force {
         double distance = 0;
         switch (myWallID) {
             case BOTTOM_WALL_ID:
-                distance = Vector.distanceBetween(m.getCenter().y, Model.getSize().height);
+                distance = Math.abs(m.getCenter().y - Model.getSize().height);
                 break;
             case LEFT_WALL_ID:
                 distance = m.getCenter().x;
@@ -68,7 +68,7 @@ public class WallRepulsionForce extends Force {
                 distance = m.getCenter().y;
                 break;
             case RIGHT_WALL_ID:
-                distance = Vector.distanceBetween(m.getCenter().x, Model.getSize().width);
+                distance = Math.abs(m.getCenter().x - Model.getSize().width);
                 break;
             default:
                 break;

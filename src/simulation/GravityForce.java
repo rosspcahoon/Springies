@@ -9,7 +9,7 @@ import util.Vector;
  */
 public class GravityForce extends Force {
 
-    private static boolean myGravityActive = true;
+    private boolean myGravityActive = true;
     private final Vector DEFAULT_GRAVITY = new Vector(90, .2);
     /**
      * The vector for gravity force.
