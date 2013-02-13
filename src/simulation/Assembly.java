@@ -11,9 +11,9 @@ import util.Vector;
  *
  */
 public class Assembly {
-    private static List<Mass> myMasses;
-    private static List<Spring> mySprings;
-    private static Location myCenterMassLocation = new Location();
+    private List<Mass> myMasses;
+    private List<Spring> mySprings;
+    private Location myCenterMassLocation = new Location();
     
     public Assembly () {
         myMasses = new ArrayList<Mass>();
@@ -22,6 +22,7 @@ public class Assembly {
     
     public void update (double elapsedTime, List<Force> forces) {
         updateCenterMass(myMasses);
+        CenterMassForce.assignCenterOfMass(myCenterMassLocation);
         for (Spring s : mySprings) {
             s.update(elapsedTime, Model.getSize());
         }
@@ -51,7 +52,7 @@ public class Assembly {
      * Calculates the center of mass location given a system of masses.
      * @param masses is the system used for calculation
      */
-    public static void updateCenterMass(final List<Mass> masses) {
+    public void updateCenterMass(final List<Mass> masses) {
         double totalMass = 0;
         double tX = 0;
         double tY = 0;

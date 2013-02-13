@@ -1,7 +1,6 @@
 package simulation;
 
 import java.awt.event.KeyEvent;
-import java.util.Scanner;
 import util.Vector;
 
 
@@ -20,8 +19,6 @@ public class WallRepulsionForce extends Force {
     public static final int RIGHT_WALL_ID = 2;
     public static final int BOTTOM_WALL_ID = 3;
     public static final int LEFT_WALL_ID = 4;
-
-    private static boolean[] myActiveWalls = {true, true, true, true};
 
     private Vector myRepulsion;
     private double myExponent;
@@ -51,10 +48,7 @@ public class WallRepulsionForce extends Force {
     }
 
     @Override
-    public void applyForce (final Mass m) {
-        if (!myActiveWalls[myWallID - 1]) {
-            return;
-        }
+    protected Vector generateForce (Mass m) {
         Vector scaledForce = new Vector(myRepulsion);
         double distance = 0;
         switch (myWallID) {
@@ -75,7 +69,7 @@ public class WallRepulsionForce extends Force {
         }
 
         scaledForce.scale(1 / (Math.pow(distance, myExponent)));
-        m.applyForce(scaledForce);
+        return scaledForce;
     }
 
     /**
@@ -99,30 +93,22 @@ public class WallRepulsionForce extends Force {
         }
     }
 
-    private void wallRepulsionCommand (Scanner line) {
-        myWallID = (int) line.nextDouble();
-        double angle = determineAngle(myWallID);
-        double magnitude = line.nextDouble();
-        myRepulsion = new Vector(angle, magnitude);
-        myExponent = line.nextDouble();
-    }
-
     /**
      * Toggled the specific wall repulsion force given a wallID
-     * @param wallID The wallID of the force to toggle
+     * @param key The key pressed
      */
     public void toggle (int key) {
-        if (key == KeyEvent.VK_1) {
-            myActiveWalls[0] = !myActiveWalls[0];
+        if (key == KeyEvent.VK_1 && myWallID == TOP_WALL_ID) {
+            toggleActiveState();
         }
-        else if (key == KeyEvent.VK_2) {
-            myActiveWalls[1] = !myActiveWalls[1];
+        else if (key == KeyEvent.VK_2 && myWallID == RIGHT_WALL_ID) {
+            toggleActiveState();
         }
-        else if (key == KeyEvent.VK_3) {
-            myActiveWalls[2] = !myActiveWalls[2];
+        else if (key == KeyEvent.VK_3 && myWallID == BOTTOM_WALL_ID) {
+            toggleActiveState();
         }
-        else if (key == KeyEvent.VK_4) {
-            myActiveWalls[3] = !myActiveWalls[3];
+        else if (key == KeyEvent.VK_4 && myWallID == LEFT_WALL_ID) {
+            toggleActiveState();
         }
     }
 }

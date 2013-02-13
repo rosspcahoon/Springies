@@ -2,8 +2,6 @@ package simulation;
 
 
 import java.awt.event.KeyEvent;
-import java.util.List;
-import java.util.Scanner;
 import util.Location;
 
 /**
@@ -13,13 +11,12 @@ import util.Location;
  */
 public class CenterMassForce extends Force {
 
-    private static boolean ourCenterMassActive = true;
     private static final double DEFAULT_MAGNITUDE = 10;
     private static final double DEFAULT_EXPONENT = 2;
     /**
      * The location where the force is directed.
      */
-    private static Location ourCenterMassLocation = new Location();
+    private static Location ourCenterMassLocation;
     /**
      * The magnitude of the center of mass force.
      */
@@ -48,28 +45,28 @@ public class CenterMassForce extends Force {
      * Calculates and applies a force to the given mass.
      * @param m is the mass that the force is being applied to.
      */
-    public final void applyForce(final Mass m) {
-        if (ourCenterMassActive) {
-            util.Vector tVect = new util.Vector(m.getCenter(), ourCenterMassLocation);
-            double tDist = Math.abs(m.getCenter().distance(ourCenterMassLocation));
-            tVect.setMagnitude(myMagnitude / Math.pow(tDist, myExponent));
-            m.applyForce(tVect);
+    @Override
+    protected final util.Vector generateForce(final Mass m) {
+        if(ourCenterMassLocation == null) {
+            return new util.Vector(0, 0);
         }
-    }
-
-    // assign centerMass data from formatted data
-    private void centerMassCommand(Scanner line) {
-        myMagnitude = line.nextDouble();
-        myExponent = line.nextDouble();
-
+        util.Vector tVect = new util.Vector(m.getCenter(), ourCenterMassLocation);
+        double tDist = Math.abs(m.getCenter().distance(ourCenterMassLocation));
+        tVect.setMagnitude(myMagnitude / Math.pow(tDist, myExponent));
+        return tVect;
     }
 
     /**
      * Toggles whether the center of mass force is active.
+     * @param key The key to be checked against.
      */
     public void toggle (int key) {
-        if (key == KeyEvent.VK_M){
-            ourCenterMassActive = !ourCenterMassActive;
+        if (key == KeyEvent.VK_M) {
+            toggleActiveState();
         }
+    }
+    
+    public static void assignCenterOfMass(Location center) {
+        ourCenterMassLocation = center;
     }
 }

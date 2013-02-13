@@ -61,7 +61,10 @@ public class Model {
         }
     }
 
-
+    /**
+     * Adds a new assembly to the running model.
+     * @param assembly The assembly to be added
+     */
     public void add (Assembly assembly) {
         myAssemblies.add(assembly);
     }
@@ -107,7 +110,7 @@ public class Model {
      * @param key is the set of all keys that are pressed when inputForForces is called
      */
     public void inputForForces(int key) {
-        for (Force f: myForces){
+        for (Force f: myForces) {
             f.toggle(key);
         }
 //        if (key == KeyEvent.VK_G) {

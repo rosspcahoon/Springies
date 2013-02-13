@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <fileset-config file-format-version="1.2.0" simple-config="false" sync-formatter="false">
-  <fileset name="all" enabled="true" check-config-name="CompSci308" local="false">
-    <file-match-pattern match-pattern="." include-pattern="true"/>
+  <local-check-config name="CS308" location="/Users/Poopsy/Documents/workspace/CompSci308_checkstyle.xml" type="external" description="">
+    <additional-data name="protect-config-file" value="false"/>
+  </local-check-config>
+  <fileset name="Simulation" enabled="true" check-config-name="CS308" local="true">
+    <file-match-pattern match-pattern="src/simulation/." include-pattern="true"/>
   </fileset>
 </fileset-config>
