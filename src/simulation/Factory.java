@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
 import util.Vector;
@@ -83,6 +84,7 @@ public class Factory {
                     }                    
                 }
             }
+            
             input.close();
         }
         catch (FileNotFoundException e) {
@@ -143,5 +145,32 @@ public class Factory {
         double exponent = line.nextDouble();
         WallRepulsionForce result = new WallRepulsionForce(wallID, magnitude, exponent);
         return result;
+    }
+    
+    private void addDefaultForces(Model model) {
+        HashSet<Class> forcesPresent = new HashSet<Class>();
+        for (Force f : model.getForces()) {
+            forcesPresent.add(f.getClass());
+        }
+        
+        //TODO FIX THIS CRAP
+        if (!forcesPresent.contains(CenterMassForce.class)) {
+            model.add(new CenterMassForce());
+        }
+        else if (!forcesPresent.contains(CenterMassForce.class)) {
+            model.add(new CenterMassForce());
+        }
+        else if (!forcesPresent.contains(CenterMassForce.class)) {
+            model.add(new CenterMassForce());
+        }
+        else if (!forcesPresent.contains(CenterMassForce.class)) {
+            model.add(new CenterMassForce());
+        }
+        else if (!forcesPresent.contains(CenterMassForce.class)) {
+            model.add(new CenterMassForce());
+        }
+        else if (!forcesPresent.contains(CenterMassForce.class)) {
+            model.add(new CenterMassForce());
+        }
     }
 }

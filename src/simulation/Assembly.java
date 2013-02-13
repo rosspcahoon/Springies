@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 import util.Location;
-import util.Vector;
 /**
  * Manages groups of masses that were loaded together
  * @author Ross Cahoon and Wayne You

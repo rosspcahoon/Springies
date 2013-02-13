@@ -103,6 +103,7 @@ public class Model {
             for (Assembly a: myAssemblies) {
                 a.clear();
             }
+            myAssemblies.clear();
         }
     }
     /**
@@ -163,5 +164,9 @@ public class Model {
      */
     public static Dimension getSize() {
         return ourSize;
+    }
+    
+    public List<Force> getForces() {
+        return myForces;
     }
 }

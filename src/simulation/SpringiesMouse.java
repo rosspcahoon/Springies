@@ -22,7 +22,6 @@ public class SpringiesMouse {
     private double mySpringLength;
     private Mass myConnectedMass;
     private Spring myMouseSpring;
-    private ArrayList<Mass> myMasses = new ArrayList<Mass>(); 
     /**
      * Applies force to the nearest mass and maintains the spring length until a mouse release.
      * 
@@ -34,15 +33,18 @@ public class SpringiesMouse {
         if (assemblies.isEmpty()) {
             return;
         }
-        for (Assembly a: assemblies) {
-            myMasses.addAll(a.getMasses());
-        }
 
         if (mousePosition != Canvas.NO_MOUSE_PRESSED && !myWasClicked) {
+            
+            ArrayList<Mass> masses = addMasses(assemblies);
+            if (masses.isEmpty()) {
+                return;
+            }
+            
             Mass mouseMass = new FixedMass(mousePosition.getX(), mousePosition.getY(), -1);
-            Mass minMass = myMasses.get(0);
+            Mass minMass = masses.get(0);
             double minDistance = minMass.distance(mouseMass);
-            for (Mass m : myMasses) {
+            for (Mass m : masses) {
                 double distance = mouseMass.distance(m);
                 if (minDistance > distance) {
                     minDistance = distance;
@@ -77,6 +79,14 @@ public class SpringiesMouse {
         if (myWasClicked) {
             myMouseSpring.paint(pen);
         }
+    }
+    
+    private ArrayList<Mass> addMasses(List<Assembly> assemblies) {
+        ArrayList<Mass> masses = new ArrayList<Mass>();
+        for (Assembly a: assemblies) {
+            masses.addAll(a.getMasses());
+        }
+        return masses;
     }
 
 }

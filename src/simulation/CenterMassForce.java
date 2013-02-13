@@ -46,8 +46,8 @@ public class CenterMassForce extends Force {
      * @param m is the mass that the force is being applied to.
      */
     @Override
-    protected final util.Vector generateForce(final Mass m) {
-        if(ourCenterMassLocation == null) {
+    protected util.Vector generateForce(Mass m) {
+        if (ourCenterMassLocation == null) {
             return new util.Vector(0, 0);
         }
         util.Vector tVect = new util.Vector(m.getCenter(), ourCenterMassLocation);
