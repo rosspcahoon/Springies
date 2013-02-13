@@ -8,20 +8,12 @@ import java.util.List;
 import view.Canvas;
 
 /**
- * XXX.
- * 
  * @author Robert C. Duvall, Ross Cahoon, Wayne You
  */
 public class Model {
     private static final int SIZE_CHANGE_VALUE = 10;
-    /**
-     * The Dimension of the Canvas we are painting on, this is a hack. This
-     * refuses to acknowledge the default package that main is in and be able to
-     * use the constants This isn't good practice
-     */
     private static final Dimension DEFAULT_DIM = new Dimension(800, 600);
     private static Dimension ourSize = new Dimension(DEFAULT_DIM.width, DEFAULT_DIM.height);
-    // simulation state
     private Canvas myView;
     private List <Assembly> myAssemblies;
     private List<Force> myForces;
@@ -76,6 +68,7 @@ public class Model {
     public void add (Force force) {
         myForces.add(force);
     } 
+
     /**
      * Calls the input handler from the Canvas in
      * order to find out what buttons are pressed
@@ -106,6 +99,7 @@ public class Model {
             myAssemblies.clear();
         }
     }
+
     /**
      * Handles input for all operations that involve amending the forces.
      * @param key is the set of all keys that are pressed when inputForForces is called
@@ -114,28 +108,8 @@ public class Model {
         for (Force f: myForces) {
             f.toggle(key);
         }
-//        if (key == KeyEvent.VK_G) {
-//            GravityForce.toggleGravity (key);
-//        }
-//        else if (key == KeyEvent.VK_V) {
-//            ViscosityForce.toggleViscosity();
-//        }
-//        else if (key == KeyEvent.VK_M) {
-//            CenterMassForce.toggleCenterMassForce();
-//        }
-//        else if (key == KeyEvent.VK_1) {
-//            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.TOP_WALL_ID);
-//        }
-//        else if (key == KeyEvent.VK_2) {
-//            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.RIGHT_WALL_ID);
-//        }
-//        else if (key == KeyEvent.VK_3) {
-//            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.BOTTOM_WALL_ID);
-//        }
-//        else if (key == KeyEvent.VK_4) {
-//            WallRepulsionForce.toggleWallRepulsion(WallRepulsionForce.LEFT_WALL_ID);
-//        }
     }
+
     /**
      * Handles input for all operations that involve
      * amending the size of the Canvas.
@@ -159,14 +133,33 @@ public class Model {
             ourSize.setSize(ourSize.getWidth() - SIZE_CHANGE_VALUE, ourSize.getHeight());
         }
     }
+
     /**
      *Returns the Dimension of the model
      */
     public static Dimension getSize() {
         return ourSize;
     }
-    
+
+    /**
+     * Retrieves the forces from the model
+     * @return myForces
+     */
     public List<Force> getForces() {
         return myForces;
+    }
+
+    /**
+     * Examines forces at play and returns WallRepulsionForces that exist in the Model
+     * @return
+     */
+    public ArrayList<WallRepulsionForce> getWallRepulsionForces() {
+        ArrayList<WallRepulsionForce> result = new ArrayList<WallRepulsionForce>();
+        for (Force f: myForces) {
+            if (f.getClass() == WallRepulsionForce.class) {
+                result.add((WallRepulsionForce) f);
+            }
+        }
+        return result;
     }
 }

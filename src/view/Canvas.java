@@ -104,7 +104,7 @@ public class Canvas extends JComponent {
     public Collection<Integer> getKeysPressed () {
         return Collections.unmodifiableSet(myKeys);
     }
-    
+
     /**
      * Returns all keys currently pressed by the user.
      */
@@ -125,11 +125,11 @@ public class Canvas extends JComponent {
     public void start () {
         // create a timer to animate the canvas
         myTimer = new Timer(DEFAULT_DELAY, 
-            new ActionListener() {
-                public void actionPerformed (ActionEvent e) {
-                    step();
-                }
-            });
+                            new ActionListener() {
+            public void actionPerformed (ActionEvent e) {
+                step();
+            }
+        });
         // start animation
         mySimulation = new Model(this);
         loadModel();
@@ -199,9 +199,9 @@ public class Canvas extends JComponent {
             factory.loadModel(mySimulation, INPUT_CHOOSER.getSelectedFile());            
         }
         response = INPUT_CHOOSER.showOpenDialog(null);
-        if (response == JFileChooser.APPROVE_OPTION) {
-            factory.loadForces(mySimulation, INPUT_CHOOSER.getSelectedFile());            
-        }
+
+        factory.loadForces(mySimulation, INPUT_CHOOSER.getSelectedFile());            
+
     }
     /**
      * Loads additional models into the Canvas

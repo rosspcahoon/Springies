@@ -25,8 +25,6 @@ public class Factory {
     // mass IDs
     private Map<Integer, Mass> myMasses = new HashMap<Integer, Mass>();
 
-
-
     /**
      * Loads the model information 
      * @param model the current Model that information is being loaded into.
@@ -56,13 +54,12 @@ public class Factory {
             e.printStackTrace();
         }
     }
-    
+
     /**
      * Loads the Forces information 
      * @param model the current Model that information is being loaded into.
      * @param modelFile the file the information about the Model is being read from.
      */
-
     public void loadForces (Model model, File modelFile) {
         try {
             Scanner input = new Scanner(modelFile);
@@ -82,9 +79,9 @@ public class Factory {
                     else if (WALL_REPULSION_KEYWORD.equals(type)) {
                         model.add(wallRepulsionCommand(line));
                     }                    
-                }
+                }                
             }
-            
+            addDefaultForces(model);
             input.close();
         }
         catch (FileNotFoundException e) {
@@ -146,31 +143,36 @@ public class Factory {
         WallRepulsionForce result = new WallRepulsionForce(wallID, magnitude, exponent);
         return result;
     }
-    
+
     private void addDefaultForces(Model model) {
         HashSet<Class> forcesPresent = new HashSet<Class>();
         for (Force f : model.getForces()) {
             forcesPresent.add(f.getClass());
         }
-        
-        //TODO FIX THIS CRAP
         if (!forcesPresent.contains(CenterMassForce.class)) {
             model.add(new CenterMassForce());
         }
-        else if (!forcesPresent.contains(CenterMassForce.class)) {
-            model.add(new CenterMassForce());
+        else if (!forcesPresent.contains(GravityForce.class)) {
+            model.add(new GravityForce());
         }
-        else if (!forcesPresent.contains(CenterMassForce.class)) {
-            model.add(new CenterMassForce());
+        else if (!forcesPresent.contains(ViscosityForce.class)) {
+            model.add(new ViscosityForce());
         }
-        else if (!forcesPresent.contains(CenterMassForce.class)) {
-            model.add(new CenterMassForce());
+        HashSet<Integer> wallsPresent = new HashSet<Integer>();
+        for (WallRepulsionForce f: model.getWallRepulsionForces()) {
+            wallsPresent.add(f.getID());
         }
-        else if (!forcesPresent.contains(CenterMassForce.class)) {
-            model.add(new CenterMassForce());
+        if (!wallsPresent.contains(WallRepulsionForce.TOP_WALL_ID)) {
+            model.add(new WallRepulsionForce(WallRepulsionForce.TOP_WALL_ID));
         }
-        else if (!forcesPresent.contains(CenterMassForce.class)) {
-            model.add(new CenterMassForce());
+        if (!wallsPresent.contains(WallRepulsionForce.BOTTOM_WALL_ID)) {
+            model.add(new WallRepulsionForce(WallRepulsionForce.BOTTOM_WALL_ID));
+        }
+        if (!wallsPresent.contains(WallRepulsionForce.RIGHT_WALL_ID)) {
+            model.add(new WallRepulsionForce(WallRepulsionForce.RIGHT_WALL_ID));
+        }
+        if (!wallsPresent.contains(WallRepulsionForce.LEFT_WALL_ID)) {
+            model.add(new WallRepulsionForce(WallRepulsionForce.LEFT_WALL_ID));
         }
     }
 }

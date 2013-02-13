@@ -1,5 +1,4 @@
 package simulation;
-
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,16 +8,25 @@ import util.Location;
  * @author Ross Cahoon and Wayne You
  *
  */
+
 public class Assembly {
     private List<Mass> myMasses;
     private List<Spring> mySprings;
     private Location myCenterMassLocation = new Location();
     
+    /**
+     * Constructor that creates an Assembly that holds a Masses and Springs
+     */
     public Assembly () {
         myMasses = new ArrayList<Mass>();
         mySprings = new ArrayList<Spring>();
     }
-    
+
+    /**
+     * Updates the Masses and Springs in the Assembly
+     * @param elapsedTime time elapsed since simulation started
+     * @param forces forces that can act on Masses in the Assembly
+     */
     public void update (double elapsedTime, List<Force> forces) {
         updateCenterMass(myMasses);
         CenterMassForce.assignCenterOfMass(myCenterMassLocation);
@@ -32,7 +40,7 @@ public class Assembly {
             m.update(elapsedTime, Model.getSize());
         }
     }
-    
+
     /**
      * Draw all elements of the simulation.
      * @param pen the Graphics2D used to paint with.
@@ -46,7 +54,6 @@ public class Assembly {
         }
     }
 
-    
     /**
      * Calculates the center of mass location given a system of masses.
      * @param masses is the system used for calculation
@@ -63,22 +70,34 @@ public class Assembly {
         myCenterMassLocation.setLocation(tX / totalMass, tY / totalMass);
     }
     
+    /**
+     * Adds a spring to the assembly
+     * @param spring the spring to be added
+     */
     public void add (Spring spring) {
         mySprings.add(spring); 
     }
     
+    /**
+     * Adds a mass to the assembly
+     * @param mass the mass to be added
+     */
     public void add (Mass mass) {
         myMasses.add(mass);
     }
-    
-    public List<Mass> getMasses(){
+
+    /**
+     * Returns the masses in the Assembly
+     */
+    public List<Mass> getMasses() {
         return myMasses;
     }
 
+    /**
+     * Clears all masses and springs in the assembly
+     */
     public void clear () {
         myMasses.clear();
         mySprings.clear();
-        
     }
-    
 }

@@ -31,5 +31,6 @@ public abstract class Force {
     
     protected void toggleActiveState () {
         myIsActive = !myIsActive;
+        System.out.println(this.getClass() + " " + myIsActive);
     }
 }

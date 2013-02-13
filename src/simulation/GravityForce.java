@@ -18,6 +18,7 @@ public class GravityForce extends Force {
      */
     public GravityForce() {
         myGravity = DEFAULT_GRAVITY;
+        toggleActiveState();
     }
     /**
      * Used to construct the GravityForce object.
@@ -40,6 +41,7 @@ public class GravityForce extends Force {
      */
     public void toggle (int key) {
         if (key == KeyEvent.VK_G) {
+            System.out.println("GRAV TOGGLE");
             toggleActiveState();
         }
     }

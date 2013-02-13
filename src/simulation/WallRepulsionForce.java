@@ -9,7 +9,7 @@ import util.Vector;
  *         Calculates and tracks the WallRepulsionForce.
  */
 public class WallRepulsionForce extends Force {
-    private static final double DEFAULT_MAGNITUDE = 1;
+    private static final double DEFAULT_MAGNITUDE = 2000;
     private static final double DEFAULT_EXPONENT = 2;
     private static final int RIGHT = 0;
     private static final int DOWN = 90;
@@ -32,11 +32,11 @@ public class WallRepulsionForce extends Force {
         myRepulsion = new Vector(determineAngle(wallID), DEFAULT_MAGNITUDE);
         myExponent = DEFAULT_EXPONENT;
         myWallID = wallID;
+        toggleActiveState();
     }
 
     /**
      * Used to construct the WallRepulsionForce object.
-     * 
      * @param wallID the ID of a wall that generates a force
      * @param magnitude the magnitude of the force
      * @param exponent the exponent of the force
@@ -73,8 +73,7 @@ public class WallRepulsionForce extends Force {
     }
 
     /**
-     * Given a number determines angle for the force and assigns to to myAngle
-     * 
+     * Given a number determines angle for the force and assigns to to myAngle 
      * @param wallID the id of the wall that needs a angle
      */
 
@@ -98,17 +97,29 @@ public class WallRepulsionForce extends Force {
      * @param key The key pressed
      */
     public void toggle (int key) {
-        if (key == KeyEvent.VK_1 && myWallID == TOP_WALL_ID) {
+//        if (key == KeyEvent.VK_1 && myWallID == TOP_WALL_ID) {
+//            System.out.println("WALL 1 TOGGLE");
+//            toggleActiveState();
+//        }
+        if (key == KeyEvent.VK_2 && myWallID == RIGHT_WALL_ID) {
+            System.out.println("WALL 2 TOGGLE");
             toggleActiveState();
         }
-        else if (key == KeyEvent.VK_2 && myWallID == RIGHT_WALL_ID) {
+        else if (key == KeyEvent.VK_1 && myWallID == TOP_WALL_ID) {
+            System.out.println("WALL 1 TOGGLE");
             toggleActiveState();
         }
         else if (key == KeyEvent.VK_3 && myWallID == BOTTOM_WALL_ID) {
+            System.out.println("WALL 3 TOGGLE");
             toggleActiveState();
         }
         else if (key == KeyEvent.VK_4 && myWallID == LEFT_WALL_ID) {
+            System.out.println("WALL 4 TOGGLE");
             toggleActiveState();
         }
+    }
+
+    public int getID(){
+        return myWallID;
     }
 }

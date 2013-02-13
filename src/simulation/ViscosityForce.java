@@ -18,6 +18,7 @@ public class ViscosityForce extends Force {
      */
     public ViscosityForce() {
         myViscosity = DEAFULT_VISCOSITY;
+        toggleActiveState();
     }
     /**
      * Used to construct the ViscosityForce object.
@@ -41,6 +42,7 @@ public class ViscosityForce extends Force {
      */
     public void toggle (int key) {
         if (key == KeyEvent.VK_V) {
+            System.out.println("VIS TOGGLE");
             toggleActiveState();
         }
     }
