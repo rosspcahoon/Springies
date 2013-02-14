@@ -146,16 +146,17 @@ public class Factory {
 
     private void addDefaultForces(Model model) {
         HashSet<Class> forcesPresent = new HashSet<Class>();
+        System.out.println(forcesPresent);
         for (Force f : model.getForces()) {
             forcesPresent.add(f.getClass());
         }
         if (!forcesPresent.contains(CenterMassForce.class)) {
             model.add(new CenterMassForce());
         }
-        else if (!forcesPresent.contains(GravityForce.class)) {
+        if (!forcesPresent.contains(GravityForce.class)) {
             model.add(new GravityForce());
         }
-        else if (!forcesPresent.contains(ViscosityForce.class)) {
+        if (!forcesPresent.contains(ViscosityForce.class)) {
             model.add(new ViscosityForce());
         }
         HashSet<Integer> wallsPresent = new HashSet<Integer>();
